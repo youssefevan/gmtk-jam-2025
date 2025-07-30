@@ -1,0 +1,47 @@
+[gd_scene load_steps=11 format=3 uid="uid://d1ywo38lots23"]
+
+[ext_resource type="Script" uid="uid://b445j78li567" path="res://scripts/card.gd" id="1_6u4wf"]
+[ext_resource type="Texture2D" uid="uid://2lsg83co58ov" path="res://sprites/temp-card.png" id="1_d81rb"]
+[ext_resource type="Script" uid="uid://bghwd8bltin8" path="res://scripts/state_machine/state_manager.gd" id="3_ktuci"]
+[ext_resource type="Script" uid="uid://bp8vrtk4w8q6j" path="res://scripts/state_machine/states/idle.gd" id="4_kg30u"]
+[ext_resource type="Script" uid="uid://bsohjnvf07425" path="res://scripts/state_machine/states/hover.gd" id="5_sy11y"]
+[ext_resource type="Script" uid="uid://120ev4vux267" path="res://scripts/state_machine/states/grab.gd" id="6_1yd6c"]
+[ext_resource type="Script" uid="uid://bhymco3u3cklt" path="res://scripts/state_machine/states/select.gd" id="7_we8pq"]
+[ext_resource type="Script" uid="uid://rfycwfamhggd" path="res://scripts/state_machine/states/use.gd" id="8_4wvaf"]
+[ext_resource type="Script" uid="uid://b44lg2huu310f" path="res://scripts/state_machine/states/discard.gd" id="9_u8dfr"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_0lnsp"]
+size = Vector2(64, 80)
+
+[node name="Card" type="Area2D"]
+script = ExtResource("1_6u4wf")
+
+[node name="Sprite" type="Sprite2D" parent="."]
+texture = ExtResource("1_d81rb")
+
+[node name="Collider" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_0lnsp")
+
+[node name="StateManager" type="Node" parent="."]
+script = ExtResource("3_ktuci")
+
+[node name="Idle" type="Node" parent="StateManager"]
+script = ExtResource("4_kg30u")
+
+[node name="Hover" type="Node" parent="StateManager"]
+script = ExtResource("5_sy11y")
+
+[node name="Grab" type="Node" parent="StateManager"]
+script = ExtResource("6_1yd6c")
+
+[node name="Select" type="Node" parent="StateManager"]
+script = ExtResource("7_we8pq")
+
+[node name="Use" type="Node" parent="StateManager"]
+script = ExtResource("8_4wvaf")
+
+[node name="Discard" type="Node" parent="StateManager"]
+script = ExtResource("9_u8dfr")
+
+[connection signal="mouse_entered" from="." to="." method="_on_mouse_entered"]
+[connection signal="mouse_exited" from="." to="." method="_on_mouse_exited"]

@@ -11,8 +11,13 @@ config_version=5
 [application]
 
 config/name="GMTK Jam 2025"
+run/main_scene="uid://b0d4njbsum8b3"
 config/features=PackedStringArray("4.4", "GL Compatibility")
 config/icon="res://icon.svg"
+
+[display]
+
+window/stretch/mode="canvas_items"
 
 [rendering]
 
