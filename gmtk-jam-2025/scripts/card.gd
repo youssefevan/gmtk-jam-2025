@@ -12,6 +12,9 @@ class_name Card
 var mouse_hovering := false
 var mouse_dragging := false
 
+var anim_speed := 15.0
+var usable := false
+
 func _ready() -> void:
 	states.init(self)
 
