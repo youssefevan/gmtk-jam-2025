@@ -1,8 +1,70 @@
-[gd_scene load_steps=2 format=3 uid="uid://b0d4njbsum8b3"]
+[gd_scene load_steps=4 format=3 uid="uid://b0d4njbsum8b3"]
 
+[ext_resource type="Script" uid="uid://d1ikekvqkw83t" path="res://scripts/hand.gd" id="1_0lnsp"]
 [ext_resource type="PackedScene" uid="uid://d1ywo38lots23" path="res://scenes/card.tscn" id="1_nvhif"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_0lnsp"]
+radius = 128.0
 
 [node name="EvanScene" type="Node2D"]
 
-[node name="Card" parent="." instance=ExtResource("1_nvhif")]
-position = Vector2(576, 384)
+[node name="Hand" type="HBoxContainer" parent="."]
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = 288.0
+offset_top = 512.0
+offset_right = 864.0
+offset_bottom = 648.0
+grow_horizontal = 2
+grow_vertical = 0
+size_flags_horizontal = 8
+size_flags_vertical = 4
+theme_override_constants/separation = 48
+alignment = 1
+script = ExtResource("1_0lnsp")
+
+[node name="Card" parent="Hand" instance=ExtResource("1_nvhif")]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="Card2" parent="Hand" instance=ExtResource("1_nvhif")]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="Card3" parent="Hand" instance=ExtResource("1_nvhif")]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="Card4" parent="Hand" instance=ExtResource("1_nvhif")]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="Card5" parent="Hand" instance=ExtResource("1_nvhif")]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="Card6" parent="Hand" instance=ExtResource("1_nvhif")]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="Card7" parent="Hand" instance=ExtResource("1_nvhif")]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="PlayableArea" type="Area2D" parent="."]
+position = Vector2(576, 320)
+collision_layer = 2
+metadata/_edit_group_ = true
+
+[node name="Collider" type="CollisionShape2D" parent="PlayableArea"]
+shape = SubResource("CircleShape2D_0lnsp")

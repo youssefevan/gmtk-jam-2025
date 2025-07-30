@@ -10,17 +10,22 @@
 [ext_resource type="Script" uid="uid://rfycwfamhggd" path="res://scripts/state_machine/states/use.gd" id="8_4wvaf"]
 [ext_resource type="Script" uid="uid://b44lg2huu310f" path="res://scripts/state_machine/states/discard.gd" id="9_u8dfr"]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_0lnsp"]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_nvopj"]
 size = Vector2(64, 80)
 
-[node name="Card" type="Area2D"]
+[node name="Card" type="Control"]
+layout_mode = 3
+anchors_preset = 0
 script = ExtResource("1_6u4wf")
 
 [node name="Sprite" type="Sprite2D" parent="."]
 texture = ExtResource("1_d81rb")
 
-[node name="Collider" type="CollisionShape2D" parent="."]
-shape = SubResource("RectangleShape2D_0lnsp")
+[node name="Area" type="Area2D" parent="."]
+collision_mask = 2
+
+[node name="Collider" type="CollisionShape2D" parent="Area"]
+shape = SubResource("RectangleShape2D_nvopj")
 
 [node name="StateManager" type="Node" parent="."]
 script = ExtResource("3_ktuci")
@@ -37,11 +42,13 @@ script = ExtResource("6_1yd6c")
 [node name="Select" type="Node" parent="StateManager"]
 script = ExtResource("7_we8pq")
 
-[node name="Use" type="Node" parent="StateManager"]
+[node name="Play" type="Node" parent="StateManager"]
 script = ExtResource("8_4wvaf")
 
 [node name="Discard" type="Node" parent="StateManager"]
 script = ExtResource("9_u8dfr")
 
-[connection signal="mouse_entered" from="." to="." method="_on_mouse_entered"]
-[connection signal="mouse_exited" from="." to="." method="_on_mouse_exited"]
+[connection signal="area_entered" from="Area" to="." method="_on_area_area_entered"]
+[connection signal="area_exited" from="Area" to="." method="_on_area_area_exited"]
+[connection signal="mouse_entered" from="Area" to="." method="_on_area_mouse_entered"]
+[connection signal="mouse_exited" from="Area" to="." method="_on_area_mouse_exited"]

@@ -1,5 +1,9 @@
 extends State
 
+func enter():
+	super.enter()
+	entity.starting_position = entity.global_position
+
 func physics_update(delta):
 	super.physics_update(delta)
 	
@@ -12,7 +16,7 @@ func physics_update(delta):
 	)
 	
 	if Input.is_action_just_released("click"):
-		if entity.usable:
-			return entity.use
+		if entity.playable:
+			return entity.play
 		else:
 			return entity.idle
