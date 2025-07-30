@@ -1,12 +1,13 @@
 extends State
 
+var hand
+
 func enter():
 	super.enter()
-	entity.starting_position = entity.global_position
+	entity.remove_from_hand(entity.get_global_mouse_position())
 
 func physics_update(delta):
 	super.physics_update(delta)
-	
 	entity.scale = lerp(entity.scale, Vector2(1.1, 1.1), entity.anim_speed * delta)
 	
 	entity.global_position = lerp(
@@ -19,4 +20,5 @@ func physics_update(delta):
 		if entity.playable:
 			return entity.play
 		else:
+			entity.add_to_hand()
 			return entity.idle

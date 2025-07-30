@@ -28,38 +28,29 @@ script = ExtResource("1_0lnsp")
 
 [node name="Card" parent="Hand" instance=ExtResource("1_nvhif")]
 layout_mode = 2
-size_flags_horizontal = 4
-size_flags_vertical = 4
 
 [node name="Card2" parent="Hand" instance=ExtResource("1_nvhif")]
 layout_mode = 2
-size_flags_horizontal = 4
-size_flags_vertical = 4
 
 [node name="Card3" parent="Hand" instance=ExtResource("1_nvhif")]
 layout_mode = 2
-size_flags_horizontal = 4
-size_flags_vertical = 4
+
+[node name="ColorRect" type="ColorRect" parent="Hand/Card3"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
 
 [node name="Card4" parent="Hand" instance=ExtResource("1_nvhif")]
 layout_mode = 2
-size_flags_horizontal = 4
-size_flags_vertical = 4
 
 [node name="Card5" parent="Hand" instance=ExtResource("1_nvhif")]
 layout_mode = 2
-size_flags_horizontal = 4
-size_flags_vertical = 4
 
 [node name="Card6" parent="Hand" instance=ExtResource("1_nvhif")]
 layout_mode = 2
-size_flags_horizontal = 4
-size_flags_vertical = 4
 
 [node name="Card7" parent="Hand" instance=ExtResource("1_nvhif")]
 layout_mode = 2
-size_flags_horizontal = 4
-size_flags_vertical = 4
 
 [node name="PlayableArea" type="Area2D" parent="."]
 position = Vector2(576, 320)

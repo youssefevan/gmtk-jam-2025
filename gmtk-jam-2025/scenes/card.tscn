@@ -7,7 +7,7 @@
 [ext_resource type="Script" uid="uid://bsohjnvf07425" path="res://scripts/state_machine/states/hover.gd" id="5_sy11y"]
 [ext_resource type="Script" uid="uid://120ev4vux267" path="res://scripts/state_machine/states/grab.gd" id="6_1yd6c"]
 [ext_resource type="Script" uid="uid://bhymco3u3cklt" path="res://scripts/state_machine/states/select.gd" id="7_we8pq"]
-[ext_resource type="Script" uid="uid://rfycwfamhggd" path="res://scripts/state_machine/states/use.gd" id="8_4wvaf"]
+[ext_resource type="Script" uid="uid://rfycwfamhggd" path="res://scripts/state_machine/states/play.gd" id="8_4wvaf"]
 [ext_resource type="Script" uid="uid://b44lg2huu310f" path="res://scripts/state_machine/states/discard.gd" id="9_u8dfr"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_nvopj"]
@@ -15,10 +15,33 @@ size = Vector2(64, 80)
 
 [node name="Card" type="Control"]
 layout_mode = 3
-anchors_preset = 0
+anchor_left = -0.028
+anchor_top = -0.062
+anchor_right = 0.056
+anchor_bottom = 0.123
+offset_left = 32.256
+offset_top = 40.176
+offset_right = -32.512
+offset_bottom = -39.704
+grow_horizontal = 0
+grow_vertical = 0
+size_flags_horizontal = 4
+size_flags_vertical = 4
 script = ExtResource("1_6u4wf")
 
-[node name="Sprite" type="Sprite2D" parent="."]
+[node name="Texture" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -32.0
+offset_top = -40.0
+offset_right = 32.0
+offset_bottom = 40.0
+grow_horizontal = 2
+grow_vertical = 2
 texture = ExtResource("1_d81rb")
 
 [node name="Area" type="Area2D" parent="."]
@@ -27,8 +50,9 @@ collision_mask = 2
 [node name="Collider" type="CollisionShape2D" parent="Area"]
 shape = SubResource("RectangleShape2D_nvopj")
 
-[node name="StateManager" type="Node" parent="."]
+[node name="StateManager" type="Node" parent="." node_paths=PackedStringArray("starting_state")]
 script = ExtResource("3_ktuci")
+starting_state = NodePath("Idle")
 
 [node name="Idle" type="Node" parent="StateManager"]
 script = ExtResource("4_kg30u")
@@ -48,7 +72,7 @@ script = ExtResource("8_4wvaf")
 [node name="Discard" type="Node" parent="StateManager"]
 script = ExtResource("9_u8dfr")
 
+[connection signal="mouse_entered" from="Texture" to="." method="_on_texture_mouse_entered"]
+[connection signal="mouse_exited" from="Texture" to="." method="_on_texture_mouse_exited"]
 [connection signal="area_entered" from="Area" to="." method="_on_area_area_entered"]
 [connection signal="area_exited" from="Area" to="." method="_on_area_area_exited"]
-[connection signal="mouse_entered" from="Area" to="." method="_on_area_mouse_entered"]
-[connection signal="mouse_exited" from="Area" to="." method="_on_area_mouse_exited"]

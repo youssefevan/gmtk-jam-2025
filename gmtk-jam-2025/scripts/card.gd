@@ -16,7 +16,7 @@ var anim_speed := 15.0
 var playable := false
 
 var hand : Hand
-var starting_position : Vector2
+var hand_position : int
 
 func _ready() -> void:
 	states.init(self)
@@ -25,14 +25,18 @@ func _ready() -> void:
 func _physics_process(delta: float) -> void:
 	states.physics_update(delta)
 
-func _on_mouse_entered() -> void:
-	mouse_hovering = true
+func remove_from_hand(pos):
+	hand_position = get_index()
+	var new_parent = hand.get_parent()
+	get_parent().remove_child(self)
+	var global_pos = global_position
+	new_parent.add_child(self)
+	global_position = pos
 
-func _on_area_mouse_entered() -> void:
-	mouse_hovering = true
-
-func _on_area_mouse_exited() -> void:
-	mouse_hovering = false
+func add_to_hand():
+	get_parent().remove_child(self)
+	hand.add_child(self)
+	hand.move_child(self, hand_position)
 
 func _on_area_area_entered(area: Area2D) -> void:
 	if area.get_collision_layer_value(2):
@@ -41,3 +45,9 @@ func _on_area_area_entered(area: Area2D) -> void:
 func _on_area_area_exited(area: Area2D) -> void:
 	if area.get_collision_layer_value(2):
 		playable = false
+
+func _on_texture_mouse_entered() -> void:
+	mouse_hovering = true
+
+func _on_texture_mouse_exited() -> void:
+	mouse_hovering = false
