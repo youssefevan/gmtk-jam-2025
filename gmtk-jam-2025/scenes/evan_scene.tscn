@@ -1,59 +1,37 @@
-[gd_scene load_steps=4 format=3 uid="uid://b0d4njbsum8b3"]
+[gd_scene load_steps=5 format=3 uid="uid://b0d4njbsum8b3"]
 
-[ext_resource type="Script" uid="uid://d1ikekvqkw83t" path="res://scripts/hand.gd" id="1_0lnsp"]
+[ext_resource type="Script" uid="uid://ljcd42d07fnd" path="res://scripts/hand.gd" id="1_0lnsp"]
 [ext_resource type="PackedScene" uid="uid://d1ywo38lots23" path="res://scenes/card.tscn" id="1_nvhif"]
+
+[sub_resource type="Curve2D" id="Curve2D_0lnsp"]
+bake_interval = 1.0
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, 32, 0, 0, 0, 0, 0, 72, -16, 0, 0, 0, 0, 128, -24, 0, 0, 0, 0, 184, -16, 0, 0, 0, 0, 224, 0)
+}
+point_count = 5
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_0lnsp"]
 radius = 128.0
 
 [node name="EvanScene" type="Node2D"]
 
-[node name="Hand" type="HBoxContainer" parent="."]
-anchors_preset = 7
-anchor_left = 0.5
-anchor_top = 1.0
-anchor_right = 0.5
-anchor_bottom = 1.0
-offset_left = 288.0
-offset_top = 512.0
-offset_right = 864.0
-offset_bottom = 648.0
-grow_horizontal = 2
-grow_vertical = 0
-size_flags_horizontal = 8
-size_flags_vertical = 4
-theme_override_constants/separation = 48
-alignment = 1
+[node name="Hand" type="Path2D" parent="."]
+position = Vector2(448, 556)
+curve = SubResource("Curve2D_0lnsp")
 script = ExtResource("1_0lnsp")
 
 [node name="Card" parent="Hand" instance=ExtResource("1_nvhif")]
-layout_mode = 2
 
 [node name="Card2" parent="Hand" instance=ExtResource("1_nvhif")]
-layout_mode = 2
 
 [node name="Card3" parent="Hand" instance=ExtResource("1_nvhif")]
-layout_mode = 2
-
-[node name="ColorRect" type="ColorRect" parent="Hand/Card3"]
-layout_mode = 0
-offset_right = 40.0
-offset_bottom = 40.0
 
 [node name="Card4" parent="Hand" instance=ExtResource("1_nvhif")]
-layout_mode = 2
 
 [node name="Card5" parent="Hand" instance=ExtResource("1_nvhif")]
-layout_mode = 2
-
-[node name="Card6" parent="Hand" instance=ExtResource("1_nvhif")]
-layout_mode = 2
-
-[node name="Card7" parent="Hand" instance=ExtResource("1_nvhif")]
-layout_mode = 2
 
 [node name="PlayableArea" type="Area2D" parent="."]
-position = Vector2(576, 320)
+position = Vector2(576, 256)
 collision_layer = 2
 metadata/_edit_group_ = true
 

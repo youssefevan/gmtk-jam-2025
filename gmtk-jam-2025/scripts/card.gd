@@ -1,4 +1,4 @@
-extends Control
+extends Node2D
 class_name Card
 
 @onready var states = $StateManager
@@ -18,6 +18,8 @@ var playable := false
 var hand : Hand
 var hand_position : int
 
+var target_position
+
 func _ready() -> void:
 	states.init(self)
 	hand = get_parent()
@@ -29,14 +31,15 @@ func remove_from_hand(pos):
 	hand_position = get_index()
 	var new_parent = hand.get_parent()
 	get_parent().remove_child(self)
-	var global_pos = global_position
 	new_parent.add_child(self)
 	global_position = pos
 
 func add_to_hand():
+	var global_pos = global_position
 	get_parent().remove_child(self)
 	hand.add_child(self)
 	hand.move_child(self, hand_position)
+	position = hand.to_local(global_pos)
 
 func _on_area_area_entered(area: Area2D) -> void:
 	if area.get_collision_layer_value(2):
