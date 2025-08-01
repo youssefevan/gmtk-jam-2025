@@ -1,0 +1,17 @@
+[gd_scene load_steps=4 format=3 uid="uid://ckv6mdagrw36n"]
+
+[ext_resource type="Texture2D" uid="uid://dx01vi1ggiwoj" path="res://sprites/board/boardTemplate.png" id="1_bw3vb"]
+[ext_resource type="Script" uid="uid://djf4b5ikrdbyn" path="res://scripts/board.gd" id="1_nglv8"]
+[ext_resource type="PackedScene" uid="uid://m2sycridxtnq" path="res://scenes/player.tscn" id="1_tx6nw"]
+
+[node name="board" type="Node2D"]
+script = ExtResource("1_nglv8")
+
+[node name="player" parent="." instance=ExtResource("1_tx6nw")]
+z_index = 1
+position = Vector2(30, 197)
+
+[node name="boardTexture" type="Sprite2D" parent="."]
+position = Vector2(200, 200)
+texture = ExtResource("1_bw3vb")
+metadata/_edit_lock_ = true
