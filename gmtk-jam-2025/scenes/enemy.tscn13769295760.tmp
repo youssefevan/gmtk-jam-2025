@@ -1,0 +1,35 @@
+[gd_scene load_steps=4 format=3 uid="uid://cri5t6gqiri07"]
+
+[ext_resource type="Script" uid="uid://xb0tbdu71hys" path="res://scripts/enemy.gd" id="1_md0e3"]
+[ext_resource type="Texture2D" uid="uid://uxd00b8npui4" path="res://sprites/temp-enemy.png" id="2_4ra3w"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_0lnsp"]
+radius = 128.0
+
+[node name="Enemy" type="Area2D"]
+collision_layer = 2
+script = ExtResource("1_md0e3")
+metadata/_edit_group_ = true
+
+[node name="Sprite" type="Sprite2D" parent="."]
+scale = Vector2(4, 4)
+texture = ExtResource("2_4ra3w")
+
+[node name="Collider" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_0lnsp")
+
+[node name="Stats" type="VBoxContainer" parent="."]
+offset_left = 128.0
+offset_top = -128.0
+offset_right = 192.0
+offset_bottom = -64.0
+
+[node name="Health" type="Label" parent="Stats"]
+layout_mode = 2
+text = "HP:"
+vertical_alignment = 1
+
+[node name="Attack" type="Label" parent="Stats"]
+layout_mode = 2
+text = "AT:"
+vertical_alignment = 1

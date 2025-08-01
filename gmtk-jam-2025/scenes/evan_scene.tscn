@@ -1,39 +1,55 @@
-[gd_scene load_steps=5 format=3 uid="uid://b0d4njbsum8b3"]
+[gd_scene load_steps=8 format=3 uid="uid://b0d4njbsum8b3"]
 
 [ext_resource type="Script" uid="uid://ljcd42d07fnd" path="res://scripts/hand.gd" id="1_0lnsp"]
+[ext_resource type="Script" uid="uid://du38ev6d3r75y" path="res://scripts/combat.gd" id="1_2al7t"]
 [ext_resource type="PackedScene" uid="uid://d1ywo38lots23" path="res://scenes/card.tscn" id="1_nvhif"]
+[ext_resource type="Script" uid="uid://xdqpu2i37ti2" path="res://scripts/deck.gd" id="3_dtddy"]
+[ext_resource type="Texture2D" uid="uid://b7ht1wm15pimy" path="res://sprites/deck.png" id="3_kgsli"]
+[ext_resource type="PackedScene" uid="uid://cri5t6gqiri07" path="res://scenes/enemy.tscn" id="4_wn5c2"]
 
 [sub_resource type="Curve2D" id="Curve2D_0lnsp"]
 bake_interval = 1.0
 _data = {
-"points": PackedVector2Array(0, 0, 0, 0, 32, 0, 0, 0, 0, 0, 72, -16, 0, 0, 0, 0, 128, -24, 0, 0, 0, 0, 184, -16, 0, 0, 0, 0, 224, 0)
+"points": PackedVector2Array(0, 0, 0, 0, 32, 4, 0, 0, 0, 0, 56, -4, 0, 0, 0, 0, 88, -12, 0, 0, 0, 0, 128, -16, 0, 0, 0, 0, 168, -12, 0, 0, 0, 0, 200, -4, 0, 0, 0, 0, 224, 4)
 }
-point_count = 5
-
-[sub_resource type="CircleShape2D" id="CircleShape2D_0lnsp"]
-radius = 128.0
+point_count = 7
 
 [node name="EvanScene" type="Node2D"]
+script = ExtResource("1_2al7t")
 
-[node name="Hand" type="Path2D" parent="."]
+[node name="Deck" type="Node2D" parent="." groups=["Deck"]]
+position = Vector2(992, 488)
+script = ExtResource("3_dtddy")
+metadata/_edit_group_ = true
+
+[node name="Sprite" type="Sprite2D" parent="Deck"]
+scale = Vector2(3, 3)
+texture = ExtResource("3_kgsli")
+
+[node name="Hand" type="Path2D" parent="." groups=["Hand"]]
 position = Vector2(448, 556)
 curve = SubResource("Curve2D_0lnsp")
 script = ExtResource("1_0lnsp")
 
 [node name="Card" parent="Hand" instance=ExtResource("1_nvhif")]
 
+[node name="Card6" parent="Hand" instance=ExtResource("1_nvhif")]
+face_value = "J"
+
+[node name="Card7" parent="Hand" instance=ExtResource("1_nvhif")]
+face_value = "Q"
+
 [node name="Card2" parent="Hand" instance=ExtResource("1_nvhif")]
+face_value = "4"
 
 [node name="Card3" parent="Hand" instance=ExtResource("1_nvhif")]
+face_value = "8"
 
 [node name="Card4" parent="Hand" instance=ExtResource("1_nvhif")]
+face_value = "K"
 
 [node name="Card5" parent="Hand" instance=ExtResource("1_nvhif")]
+face_value = "2"
 
-[node name="PlayableArea" type="Area2D" parent="."]
+[node name="Enemy" parent="." instance=ExtResource("4_wn5c2")]
 position = Vector2(576, 256)
-collision_layer = 2
-metadata/_edit_group_ = true
-
-[node name="Collider" type="CollisionShape2D" parent="PlayableArea"]
-shape = SubResource("CircleShape2D_0lnsp")

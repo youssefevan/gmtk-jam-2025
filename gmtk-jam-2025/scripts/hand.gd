@@ -2,8 +2,13 @@ extends Path2D
 class_name Hand
 
 var curve_length
+var deck
+
+@onready var card_scene = preload("res://scenes/card.tscn")
+@onready var turn_manager = preload("res://resources/turn_manager.tres")
 
 func _ready():
+	deck = get_tree().get_first_node_in_group("Deck")
 	update_card_positions()
 
 func update_card_positions():
@@ -21,3 +26,6 @@ func update_card_positions():
 			var pos = curve.sample_baked(dist)
 			
 			get_child(i).target_position = pos
+
+func update_hand():
+	deck.draw_card()

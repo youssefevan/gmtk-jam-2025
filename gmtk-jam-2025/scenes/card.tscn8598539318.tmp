@@ -21,6 +21,7 @@ size = Vector2(48, 64)
 [node name="Card" type="Node2D"]
 script = ExtResource("1_6u4wf")
 suits = Array[Texture2D]([ExtResource("2_xjciw"), ExtResource("4_v23hl"), ExtResource("3_54seb"), ExtResource("3_we8pq"), ExtResource("6_xuy1i")])
+face_value = ""
 
 [node name="Base" type="TextureRect" parent="."]
 anchors_preset = 8

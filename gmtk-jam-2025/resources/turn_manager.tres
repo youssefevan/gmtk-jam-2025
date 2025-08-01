@@ -1,0 +1,7 @@
+[gd_resource type="Resource" script_class="TurnManager" load_steps=2 format=3 uid="uid://crjn6letab38c"]
+
+[ext_resource type="Script" uid="uid://bxotfdc06730h" path="res://scripts/turn_manager.gd" id="1_xrbaw"]
+
+[resource]
+script = ExtResource("1_xrbaw")
+metadata/_custom_type_script = "uid://bxotfdc06730h"

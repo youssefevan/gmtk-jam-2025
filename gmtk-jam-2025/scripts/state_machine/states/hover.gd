@@ -4,6 +4,7 @@ func physics_update(delta):
 	super.physics_update(delta)
 	
 	entity.scale = lerp(entity.scale, Vector2(1.2, 1.2), entity.anim_speed * delta)
+	entity.position = lerp(entity.position, entity.target_position+Vector2(0, -16), entity.anim_speed * delta)
 	
 	if !entity.mouse_hovering:
 		return entity.idle
