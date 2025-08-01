@@ -1,5 +1,7 @@
 extends Node
 
+signal return_cards_to_deck
+
 var player_health := 30
 
 var deck_comp = {
@@ -30,3 +32,7 @@ func get_random_card_from_deck():
 		pick -= deck_comp[card_type]
 		if pick < 0:
 			return card_type
+
+func exit_combat():
+	return_cards_to_deck.emit()
+	print("exit combat")

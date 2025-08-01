@@ -18,6 +18,8 @@ var status = {
 var health : int
 var blocking := false
 
+var dead := false
+
 var rng = RandomNumberGenerator.new()
 
 func _ready():
@@ -68,7 +70,7 @@ func take_poison_damage():
 	update_stats()
 	
 	if health <= 0:
-		print('dead')
+		die()
 	
 	var tween2 = get_tree().create_tween()
 	tween2.set_trans(Tween.TRANS_CUBIC)
@@ -134,4 +136,10 @@ func take_damage(incoming_damage):
 	update_stats()
 	
 	if health <= 0:
-		print('dead')
+		die()
+
+func die():
+	dead = true
+	$Animator.play('die')
+	
+	Global.exit_combat()

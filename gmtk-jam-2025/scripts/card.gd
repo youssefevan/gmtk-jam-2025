@@ -37,6 +37,8 @@ func _ready() -> void:
 	
 	damage = Global.rng.randi_range(1, 4)
 	
+	Global.connect("return_cards_to_deck", return_to_deck)
+	
 	$Suit.texture = suits[calculate_suit()]
 	$Number.text = str(damage)
 
@@ -87,6 +89,10 @@ func attack():
 			pass
 	
 	turn_manager.start_enemy_turn
+
+func return_to_deck():
+	if states.current_state != play and states.current_state != discard:
+		Global.deck_comp[face_value] += 1
 
 func _on_area_area_entered(area: Area2D) -> void:
 	if area.get_collision_layer_value(2):
