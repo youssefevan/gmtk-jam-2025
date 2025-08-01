@@ -26,7 +26,7 @@ scale = Vector2(3, 3)
 texture = ExtResource("3_kgsli")
 
 [node name="Debug" type="Label" parent="Deck"]
-offset_left = -160.0
+offset_left = -224.0
 offset_top = -232.0
 offset_right = -96.0
 offset_bottom = 152.0

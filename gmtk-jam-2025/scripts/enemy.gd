@@ -12,6 +12,7 @@ class_name Enemy
 var status = {
 	"frozen": false,
 	"burned": false,
+	"poisoned": 0,
 }
 
 var health : int
@@ -30,8 +31,14 @@ func update_stats():
 	$Stats/Attack.text = str("AT: ", attack_power)
 
 func take_turn():
-	update_status()
 	await get_tree().create_timer(0.9).timeout
+	
+	update_status()
+	if status["poisoned"] > 0:
+		status["poisoned"] -= 1
+		take_poison_damage()
+		await get_tree().create_timer(0.75).timeout
+		update_status()
 	
 	if status["frozen"] == false:
 		var choose_block = rng.randi_range(0, 1)
@@ -40,19 +47,48 @@ func take_turn():
 		else:
 			print("blocking! turn skipped")
 			blocking = true
+			
+			await get_tree().create_timer(0.4).timeout
+			$Blocking.visible = true
 			turn_manager.turn = turn_manager.turn_type.PLAYER
 	else:
 		print("frozen! turn skipped")
 		status["frozen"] = false
 		turn_manager.turn = turn_manager.turn_type.PLAYER
 
+func take_poison_damage():
+	await get_tree().create_timer(0.3).timeout
+	
+	var tween = get_tree().create_tween()
+	tween.set_trans(Tween.TRANS_CUBIC)
+	tween.tween_property($Sprite, "scale", Vector2(0.9, 0.9), 0.075)
+	await tween.finished
+	
+	health -= 1
+	update_stats()
+	
+	if health <= 0:
+		print('dead')
+	
+	var tween2 = get_tree().create_tween()
+	tween2.set_trans(Tween.TRANS_CUBIC)
+	tween2.tween_property($Sprite, "scale", Vector2(1.0, 1.0), 0.2)
+	await tween2.finished
+
 func apply_status(type):
-	status[type] = true
+	if type == "poisoned":
+		status[type] = 3
+	else:
+		status[type] = true
 	update_status()
 
 func update_status():
 	$Status/Frozen.visible = status["frozen"]
-	$Status/Burned.visible = status["burned"]
+	#$Status/Burned.visible = status["burned"]
+	if status["poisoned"] > 0:
+		$Status/Poisoned.visible = true
+	else:
+		$Status/Poisoned.visible = false
 
 func play_attack():
 	var tween3 = get_tree().create_tween()
@@ -85,6 +121,9 @@ func take_damage(incoming_damage):
 	if blocking:
 		net_damage = incoming_damage - floor(incoming_damage*block_strength)
 		blocking = false
+		
+		await get_tree().create_timer(0.3).timeout
+		$Blocking.visible = false
 	
 	print(incoming_damage, " ", net_damage)
 	health -= net_damage

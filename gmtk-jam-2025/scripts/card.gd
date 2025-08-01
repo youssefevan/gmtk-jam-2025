@@ -12,7 +12,7 @@ class_name Card
 @onready var turn_manager = preload("res://resources/turn_manager.tres")
 
 @export var suits : Array[Texture2D]
-@export var face_value := "A"
+@export var face_value := "Fire"
 
 var damage
 
@@ -29,36 +29,30 @@ var hand_position : int
 
 var target_position
 
+var rng = RandomNumberGenerator.new()
+
 @onready var base = $Base
 
 func _ready() -> void:
+	rng.randomize()
+	
 	states.init(self)
 	hand = get_tree().get_first_node_in_group("Hand")
 	
-	damage = calculate_value()
+	damage = rng.randi_range(1, 4)
 	
 	$Suit.texture = suits[calculate_suit()]
-	$Number.text = face_value
-
-func calculate_value():
-	match face_value:
-		"J", "Q", "K":
-			return 10
-		"A":
-			return 11
-		_:
-			var num = face_value.to_int()
-			return num
+	$Number.text = str(damage)
 
 func calculate_suit():
 	match face_value:
-		"J":
-			return 1
-		"Q":
-			return 2
-		"K":
+		"Fire":
 			return 3
-		"A":
+		"Freeze":
+			return 1
+		"Heal":
+			return 2
+		"Poison":
 			return 4
 		_:
 			return 0
@@ -85,10 +79,12 @@ func add_to_hand():
 func attack():
 	target.take_damage(damage)
 	match face_value:
-		"J":
+		"Freeze":
 			target.apply_status("frozen")
-		"K":
+		"Fire":
 			target.apply_status("burned")
+		"Poison":
+			target.apply_status("poisoned")
 		_:
 			pass
 	

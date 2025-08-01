@@ -5,19 +5,11 @@ extends Node2D
 var rng = RandomNumberGenerator.new()
 
 var deck_comp = {
-	"2": 3,
-	"3": 3,
-	"4": 3,
-	"5": 3,
-	"6": 3,
-	"7": 3,
-	"8": 2,
-	"9": 2,
-	"10": 2,
-	"J": 1,
-	"Q": 1,
-	"K": 1,
-	"A": 1,
+	"Physical": 10,
+	"Fire": 4,
+	"Freeze": 4,
+	"Poison": 4,
+	"Heal": 4,
 }
 
 func _ready():
