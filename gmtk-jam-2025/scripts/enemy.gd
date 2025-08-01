@@ -3,7 +3,7 @@ class_name Enemy
 
 @export var max_health := 30
 @export var attack_power := 3
-@export var block_strength := 0.1 # percentage of damage blocked when shielding
+@export var block_strength := 0.5 # percentage of damage blocked when shielding
 
 @export var type := "normal"
 
@@ -15,8 +15,12 @@ var status = {
 }
 
 var health : int
+var blocking := false
+
+var rng = RandomNumberGenerator.new()
 
 func _ready():
+	rng.randomize()
 	health = max_health
 	update_stats()
 	turn_manager.connect("start_enemy_turn", take_turn)
@@ -30,7 +34,13 @@ func take_turn():
 	await get_tree().create_timer(0.9).timeout
 	
 	if status["frozen"] == false:
-		play_attack()
+		var choose_block = rng.randi_range(0, 1)
+		if choose_block != 0:
+			play_attack()
+		else:
+			print("blocking! turn skipped")
+			blocking = true
+			turn_manager.turn = turn_manager.turn_type.PLAYER
 	else:
 		print("frozen! turn skipped")
 		status["frozen"] = false
@@ -71,9 +81,15 @@ func attack():
 	#deck.take_damage(attack_power)
 
 func take_damage(incoming_damage):
-	pass
-	#var net_damage = incoming_damage
-	#if blocking:
-		#net_damage = incoming_damage - floor(incoming_damage*block_stength)
-	#health -= net_damage
-	#check for death
+	var net_damage = incoming_damage
+	if blocking:
+		net_damage = incoming_damage - floor(incoming_damage*block_strength)
+		blocking = false
+	
+	print(incoming_damage, " ", net_damage)
+	health -= net_damage
+	
+	update_stats()
+	
+	if health <= 0:
+		print('dead')

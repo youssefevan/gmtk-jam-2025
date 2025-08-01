@@ -10,6 +10,9 @@ var deck
 func _ready():
 	deck = get_tree().get_first_node_in_group("Deck")
 	update_card_positions()
+	
+	for i in range(7):
+		update_hand()
 
 func update_card_positions():
 	curve.get_baked_points()

@@ -1,8 +1,7 @@
-[gd_scene load_steps=8 format=3 uid="uid://b0d4njbsum8b3"]
+[gd_scene load_steps=7 format=3 uid="uid://b0d4njbsum8b3"]
 
 [ext_resource type="Script" uid="uid://ljcd42d07fnd" path="res://scripts/hand.gd" id="1_0lnsp"]
 [ext_resource type="Script" uid="uid://du38ev6d3r75y" path="res://scripts/combat.gd" id="1_2al7t"]
-[ext_resource type="PackedScene" uid="uid://d1ywo38lots23" path="res://scenes/card.tscn" id="1_nvhif"]
 [ext_resource type="Script" uid="uid://xdqpu2i37ti2" path="res://scripts/deck.gd" id="3_dtddy"]
 [ext_resource type="Texture2D" uid="uid://b7ht1wm15pimy" path="res://sprites/deck.png" id="3_kgsli"]
 [ext_resource type="PackedScene" uid="uid://cri5t6gqiri07" path="res://scenes/enemy.tscn" id="4_wn5c2"]
@@ -26,30 +25,17 @@ metadata/_edit_group_ = true
 scale = Vector2(3, 3)
 texture = ExtResource("3_kgsli")
 
+[node name="Debug" type="Label" parent="Deck"]
+offset_left = -160.0
+offset_top = -232.0
+offset_right = -96.0
+offset_bottom = 152.0
+autowrap_mode = 2
+
 [node name="Hand" type="Path2D" parent="." groups=["Hand"]]
 position = Vector2(448, 556)
 curve = SubResource("Curve2D_0lnsp")
 script = ExtResource("1_0lnsp")
-
-[node name="Card" parent="Hand" instance=ExtResource("1_nvhif")]
-
-[node name="Card6" parent="Hand" instance=ExtResource("1_nvhif")]
-face_value = "J"
-
-[node name="Card7" parent="Hand" instance=ExtResource("1_nvhif")]
-face_value = "Q"
-
-[node name="Card2" parent="Hand" instance=ExtResource("1_nvhif")]
-face_value = "4"
-
-[node name="Card3" parent="Hand" instance=ExtResource("1_nvhif")]
-face_value = "8"
-
-[node name="Card4" parent="Hand" instance=ExtResource("1_nvhif")]
-face_value = "K"
-
-[node name="Card5" parent="Hand" instance=ExtResource("1_nvhif")]
-face_value = "2"
 
 [node name="Enemy" parent="." instance=ExtResource("4_wn5c2")]
 position = Vector2(576, 256)
