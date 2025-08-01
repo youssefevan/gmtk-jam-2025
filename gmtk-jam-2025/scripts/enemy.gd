@@ -1,7 +1,7 @@
 extends Area2D
 class_name Enemy
 
-@export var max_health := 30
+@export var max_health := 20
 @export var attack_power := 3
 @export var block_strength := 0.5 # percentage of damage blocked when shielding
 
@@ -11,8 +11,8 @@ class_name Enemy
 
 var status = {
 	"frozen": false,
-	"burned": false,
-	"poisoned": 0,
+	"burned": 0,
+	"poisoned": false,
 }
 
 var health : int
@@ -34,8 +34,8 @@ func take_turn():
 	await get_tree().create_timer(0.9).timeout
 	
 	update_status()
-	if status["poisoned"] > 0:
-		status["poisoned"] -= 1
+	if status["burned"] > 0:
+		status["burned"] -= 1
 		take_poison_damage()
 		await get_tree().create_timer(0.75).timeout
 		update_status()
@@ -76,7 +76,7 @@ func take_poison_damage():
 	await tween2.finished
 
 func apply_status(type):
-	if type == "poisoned":
+	if type == "burned":
 		status[type] = 3
 	else:
 		status[type] = true
@@ -84,11 +84,11 @@ func apply_status(type):
 
 func update_status():
 	$Status/Frozen.visible = status["frozen"]
-	$Status/Burned.visible = status["burned"]
-	if status["poisoned"] > 0:
-		$Status/Poisoned.visible = true
+	$Status/Poisoned.visible = status["poisoned"]
+	if status["burned"] > 0:
+		$Status/Burned.visible = true
 	else:
-		$Status/Poisoned.visible = false
+		$Status/Burned.visible = false
 
 func play_attack():
 	var tween3 = get_tree().create_tween()
@@ -112,16 +112,14 @@ func play_attack():
 	await tween2.finished
 
 func attack():
-	pass
-	
-	#deck.take_damage(attack_power)
+	Global.player_health -= attack_power
 
 func take_damage(incoming_damage):
 	var net_damage = incoming_damage
 	
-	if status["burned"] == true:
+	if status["poisoned"] == true:
 		net_damage = ceil(net_damage * 1.5)
-		status["burned"] = false
+		status["poisoned"] = false
 	
 	if blocking:
 		net_damage = incoming_damage - floor(incoming_damage*block_strength)

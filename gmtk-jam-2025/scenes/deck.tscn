@@ -1,0 +1,28 @@
+[gd_scene load_steps=3 format=3 uid="uid://copxl5x1spjma"]
+
+[ext_resource type="Script" uid="uid://xdqpu2i37ti2" path="res://scripts/deck.gd" id="1_6rnap"]
+[ext_resource type="Texture2D" uid="uid://b7ht1wm15pimy" path="res://sprites/deck.png" id="2_gdbsr"]
+
+[node name="Deck" type="Node2D" groups=["Deck"]]
+script = ExtResource("1_6rnap")
+metadata/_edit_group_ = true
+
+[node name="Sprite" type="Sprite2D" parent="."]
+scale = Vector2(3, 3)
+texture = ExtResource("2_gdbsr")
+
+[node name="Debug" type="Label" parent="."]
+offset_left = -224.0
+offset_top = -232.0
+offset_right = -96.0
+offset_bottom = 152.0
+autowrap_mode = 2
+
+[node name="PlayerStats" type="Label" parent="."]
+offset_left = -64.0
+offset_top = 72.0
+offset_right = 64.0
+offset_bottom = 104.0
+text = "HP:"
+horizontal_alignment = 1
+vertical_alignment = 1

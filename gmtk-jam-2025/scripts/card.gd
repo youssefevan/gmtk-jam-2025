@@ -29,17 +29,13 @@ var hand_position : int
 
 var target_position
 
-var rng = RandomNumberGenerator.new()
-
 @onready var base = $Base
 
 func _ready() -> void:
-	rng.randomize()
-	
 	states.init(self)
 	hand = get_tree().get_first_node_in_group("Hand")
 	
-	damage = rng.randi_range(1, 4)
+	damage = Global.rng.randi_range(1, 4)
 	
 	$Suit.texture = suits[calculate_suit()]
 	$Number.text = str(damage)
@@ -85,6 +81,8 @@ func attack():
 			target.apply_status("burned")
 		"Poison":
 			target.apply_status("poisoned")
+		"Heal":
+			Global.player_health += damage
 		_:
 			pass
 	
