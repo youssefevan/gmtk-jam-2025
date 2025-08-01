@@ -54,6 +54,12 @@ custom_minimum_size = Vector2(32, 32)
 layout_mode = 2
 texture = ExtResource("4_5uy6h")
 
+[node name="Burned" type="TextureRect" parent="Status"]
+visible = false
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+texture = ExtResource("4_5uy6h")
+
 [node name="Blocking" type="Sprite2D" parent="."]
 visible = false
 scale = Vector2(4, 4)
