@@ -84,7 +84,7 @@ func apply_status(type):
 
 func update_status():
 	$Status/Frozen.visible = status["frozen"]
-	#$Status/Burned.visible = status["burned"]
+	$Status/Burned.visible = status["burned"]
 	if status["poisoned"] > 0:
 		$Status/Poisoned.visible = true
 	else:
@@ -118,6 +118,11 @@ func attack():
 
 func take_damage(incoming_damage):
 	var net_damage = incoming_damage
+	
+	if status["burned"] == true:
+		net_damage = ceil(net_damage * 1.5)
+		status["burned"] = false
+	
 	if blocking:
 		net_damage = incoming_damage - floor(incoming_damage*block_strength)
 		blocking = false
