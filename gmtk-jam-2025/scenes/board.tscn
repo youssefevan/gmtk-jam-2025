@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://ckv6mdagrw36n"]
+[gd_scene load_steps=14 format=3 uid="uid://ckv6mdagrw36n"]
 
 [ext_resource type="Script" uid="uid://djf4b5ikrdbyn" path="res://scripts/board.gd" id="1_nglv8"]
 [ext_resource type="PackedScene" uid="uid://m2sycridxtnq" path="res://scenes/player.tscn" id="1_tx6nw"]
@@ -10,17 +10,54 @@
 [ext_resource type="Texture2D" uid="uid://brhyyugu5mbpr" path="res://sprites/conditions/fire.png" id="5_pnb36"]
 [ext_resource type="Texture2D" uid="uid://bsgcxfx0t6em2" path="res://sprites/conditions/poison.png" id="6_mvl7x"]
 
+[sub_resource type="Animation" id="Animation_n230i"]
+resource_name = "show"
+length = 1.25
+step = 0.05
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.25, 1, 1.25),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Color(0, 0, 0, 0), Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(0, 0, 0, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_ar2e0"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(0, 0, 0, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_pnb36"]
+_data = {
+&"RESET": SubResource("Animation_ar2e0"),
+&"show": SubResource("Animation_n230i")
+}
+
 [sub_resource type="Curve2D" id="Curve2D_nglv8"]
 bake_interval = 1.0
 _data = {
-"points": PackedVector2Array(0, 0, 0, 0, 30, 197, 0, 0, 0, 0, 32, 172, 0, 0, 0, 0, 37, 148, 0, 0, 0, 0, 47, 124, 0, 0, 0, 0, 59, 101, 0, 0, 0, 0, 81, 78, 0, 0, 0, 0, 106, 56, 0, 0, 0, 0, 129, 44, 0, 0, 0, 0, 153, 36, 0, 0, 0, 0, 178, 32, 0, 0, 0, 0, 202, 31, 0, 0, 0, 0, 227, 33, 0, 0, 0, 0, 251, 39, 0, 0, 0, 0, 274, 48, 0, 0, 0, 0, 296, 61, 0, 0, 0, 0, 320, 81, 0, 0, 0, 0, 342, 107, 0, 0, 0, 0, 353, 129, 0, 0, 0, 0, 362, 153, 0, 0, 0, 0, 367, 178, 0, 0, 0, 0, 368, 202, 0, 0, 0, 0, 367, 226, 0, 0, 0, 0, 360, 251, 0, 0, 0, 0, 351, 274, 0, 0, 0, 0, 337, 296, 0, 0, 0, 0, 317, 320, 0, 0, 0, 0, 291, 342, 0, 0, 0, 0, 269, 354, 0, 0, 0, 0, 246, 363, 0, 0, 0, 0, 220, 368, 0, 0, 0, 0, 197, 369, 0, 0, 0, 0, 172, 368, 0, 0, 0, 0, 147, 362, 0, 0, 0, 0, 124, 352, 0, 0, 0, 0, 102, 338, 0, 0, 0, 0, 78, 318, 0, 0, 0, 0, 58, 293, 0, 0, 0, 0, 46, 270, 0, 0, 0, 0, 37, 247, 0, 0, 0, 0, 31, 221, 0, 0, 0, 0, 30, 197)
+"points": PackedVector2Array(0, 0, 0, 0, 28, 200, 0, 0, 0, 0, 28, 174, 0, 0, 0, 0, 36, 148, 0, 0, 0, 0, 46, 124, 0, 0, 0, 0, 58, 102, 0, 0, 0, 0, 78, 78, 0, 0, 0, 0, 104, 58, 0, 0, 0, 0, 128, 46, 0, 0, 0, 0, 152, 40, 0, 0, 0, 0, 174, 34, 0, 0, 0, 0, 200, 30, 0, 0, 0, 0, 224, 34, 0, 0, 0, 0, 248, 38, 0, 0, 0, 0, 272, 48, 0, 0, 0, 0, 294, 60, 0, 0, 0, 0, 322, 78, 0, 0, 0, 0, 342, 104, 0, 0, 0, 0, 354, 126, 0, 0, 0, 0, 364, 150, 0, 0, 0, 0, 370, 174, 0, 0, 0, 0, 372, 200, 0, 0, 0, 0, 370, 228, 0, 0, 0, 0, 364, 252, 0, 0, 0, 0, 356, 276, 0, 0, 0, 0, 344, 298, 0, 0, 0, 0, 320, 324, 0, 0, 0, 0, 296, 342, 0, 0, 0, 0, 272, 354, 0, 0, 0, 0, 250, 364, 0, 0, 0, 0, 226, 370, 0, 0, 0, 0, 200, 372, 0, 0, 0, 0, 174, 370, 0, 0, 0, 0, 150, 366, 0, 0, 0, 0, 126, 356, 0, 0, 0, 0, 104, 344, 0, 0, 0, 0, 78, 324, 0, 0, 0, 0, 56, 300, 0, 0, 0, 0, 44, 276, 0, 0, 0, 0, 34, 252, 0, 0, 0, 0, 30, 228)
 }
-point_count = 41
+point_count = 40
 
 [node name="board" type="Node2D"]
 script = ExtResource("1_nglv8")
 suits = Array[Texture2D]([ExtResource("2_n230i"), ExtResource("4_dun80"), ExtResource("4_ar2e0"), ExtResource("5_pnb36"), ExtResource("6_mvl7x")])
-metadata/_edit_group_ = true
 
 [node name="boardTexture" type="Sprite2D" parent="."]
 position = Vector2(200, 200)
@@ -29,21 +66,22 @@ texture = ExtResource("2_nglv8")
 [node name="Tiles" type="Node2D" parent="."]
 
 [node name="Button" type="Button" parent="."]
-offset_left = -176.0
-offset_right = -80.0
-offset_bottom = 31.0
+offset_left = 144.0
+offset_top = 160.0
+offset_right = 256.0
+offset_bottom = 192.0
 text = "Roll"
 
 [node name="Number" type="Label" parent="."]
-offset_left = -176.0
-offset_top = 32.0
-offset_right = -80.0
-offset_bottom = 55.0
+offset_left = 144.0
+offset_top = 193.0
+offset_right = 256.0
+offset_bottom = 216.0
 horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="AddCard" type="Control" parent="."]
-visible = false
+modulate = Color(0, 0, 0, 0)
 layout_mode = 3
 anchors_preset = 0
 offset_right = 40.0
@@ -67,12 +105,17 @@ texture = ExtResource("3_dxjtj")
 scale = Vector2(3, 3)
 texture = ExtResource("4_dun80")
 
+[node name="Animator" type="AnimationPlayer" parent="AddCard"]
+libraries = {
+&"": SubResource("AnimationLibrary_pnb36")
+}
+
 [node name="Path2D" type="Path2D" parent="."]
 z_index = 1
 curve = SubResource("Curve2D_nglv8")
 
 [node name="player" parent="Path2D" instance=ExtResource("1_tx6nw")]
 z_index = 1
-position = Vector2(32, 200)
+position = Vector2(28, 200)
 
 [connection signal="pressed" from="Button" to="." method="_on_button_pressed"]

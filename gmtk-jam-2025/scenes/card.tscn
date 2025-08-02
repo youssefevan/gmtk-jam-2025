@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3 uid="uid://d1ywo38lots23"]
+[gd_scene load_steps=19 format=3 uid="uid://d1ywo38lots23"]
 
 [ext_resource type="Script" uid="uid://b445j78li567" path="res://scripts/card.gd" id="1_6u4wf"]
 [ext_resource type="Texture2D" uid="uid://2lsg83co58ov" path="res://sprites/temp-card.png" id="1_d81rb"]
@@ -15,12 +15,55 @@
 [ext_resource type="Script" uid="uid://rfycwfamhggd" path="res://scripts/state_machine/states/play.gd" id="8_4wvaf"]
 [ext_resource type="Script" uid="uid://b44lg2huu310f" path="res://scripts/state_machine/states/discard.gd" id="9_u8dfr"]
 
+[sub_resource type="Animation" id="Animation_42b55"]
+resource_name = "discard"
+length = 0.4
+step = 0.05
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:modulate")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.4),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(0.885833, 0.299156, 0.364316, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_xjciw"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_54seb"]
+_data = {
+&"RESET": SubResource("Animation_xjciw"),
+&"discard": SubResource("Animation_42b55")
+}
+
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_nvopj"]
 size = Vector2(48, 64)
 
 [node name="Card" type="Node2D"]
 script = ExtResource("1_6u4wf")
 suits = Array[Texture2D]([ExtResource("2_42b55"), ExtResource("3_42b55"), ExtResource("4_42b55"), ExtResource("4_hpf3o"), ExtResource("4_xjciw")])
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_54seb")
+}
 
 [node name="Base" type="TextureRect" parent="."]
 anchors_preset = 8

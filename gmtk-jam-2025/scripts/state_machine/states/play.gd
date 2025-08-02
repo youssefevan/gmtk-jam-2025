@@ -42,6 +42,6 @@ func play_anim():
 	tween2.tween_property(entity, "global_position", entity.global_position + Vector2(0, 16), 0.2)
 	await tween2.finished
 	
-	await get_tree().create_timer(0.3).timeout
+	await get_tree().create_timer(0.1).timeout
 	
 	done = true

@@ -19,6 +19,9 @@ var health : int
 var blocking := false
 
 func _ready():
+	max_health = Global.rng.randi_range(3, 6) * Global.loop
+	attack_power = Global.rng.randi_range(1, 4) + (Global.loop * 2)
+	
 	health = max_health
 	update_stats()
 	turn_manager.connect("start_enemy_turn", take_turn)
@@ -65,6 +68,7 @@ func take_burn_damage():
 	await tween.finished
 	
 	health -= 1
+	health = clampi(health, 0, 100)
 	update_stats()
 	
 	if health <= 0:
@@ -128,13 +132,23 @@ func take_damage(incoming_damage):
 		
 		await get_tree().create_timer(0.3).timeout
 		$Blocking.visible = false
-		
-	print(incoming_damage, " ", net_damage)
+	
+	var tween = get_tree().create_tween()
+	tween.set_trans(Tween.TRANS_CUBIC)
+	tween.tween_property($Sprite, "scale", Vector2(0.9, 0.9), 0.075)
+	await tween.finished
+	
+	var tween2 = get_tree().create_tween()
+	tween2.set_trans(Tween.TRANS_CUBIC)
+	tween2.tween_property($Sprite, "scale", Vector2(1.0, 1.0), 0.2)
+	await tween2.finished
+	
+	#print(incoming_damage, " --> ", net_damage)
 	health -= net_damage
 	health = clampi(health, 0, 100)
 	
 	update_stats()
-		
+	
 	if health <= 0:
 		die()
 

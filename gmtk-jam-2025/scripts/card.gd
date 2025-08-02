@@ -14,6 +14,8 @@ class_name Card
 @export var suits : Array[Texture2D]
 @export var face_value := "Fire"
 
+@onready var animator = $AnimationPlayer
+
 var damage
 
 var target
@@ -35,7 +37,7 @@ func _ready() -> void:
 	states.init(self)
 	hand = get_tree().get_first_node_in_group("Hand")
 	
-	damage = Global.rng.randi_range(1, 4)
+	damage = Global.rng.randi_range(0, 3) + Global.loop
 	
 	Global.connect("end_combat", end_combat)
 	
@@ -70,7 +72,7 @@ func add_to_hand():
 	get_parent().remove_child(self)
 	hand.add_child(self)
 	hand.update_card_positions()
-	if hand_position and (hand.get_child_count()-1) <= hand_position:
+	if hand_position and (hand.get_child_count()-1) >= hand_position:
 		hand.move_child(self, hand_position)
 	position = hand.to_local(global_pos)
 
