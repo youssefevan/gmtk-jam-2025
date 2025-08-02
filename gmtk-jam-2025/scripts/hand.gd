@@ -35,4 +35,7 @@ func update_hand():
 	deck.draw_card()
 
 func end_combat():
-	pass
+	var tween = get_tree().create_tween()
+	tween.set_trans(Tween.TRANS_CUBIC)
+	tween.tween_property(self, "global_position", global_position + Vector2(0, 200), 0.3)
+	await tween.finished

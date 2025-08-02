@@ -1,7 +1,7 @@
 extends Area2D
 class_name Enemy
 
-@export var max_health := 20
+@export var max_health := 6
 @export var attack_power := 3
 @export var block_strength := 0.5 # percentage of damage blocked when shielding
 
@@ -34,27 +34,29 @@ func take_turn():
 	await get_tree().create_timer(0.9).timeout
 	
 	update_status()
-	if status["burned"] > 0:
-		status["burned"] -= 1
-		take_poison_damage()
-		await get_tree().create_timer(0.75).timeout
-		update_status()
 	
-	if status["frozen"] == false:
-		var choose_block = Global.rng.randi_range(0, 1)
-		if choose_block != 0:
-			play_attack()
+	if health > 0:
+		if status["burned"] > 0:
+			status["burned"] -= 1
+			take_poison_damage()
+			await get_tree().create_timer(0.75).timeout
+			update_status()
+		
+		if status["frozen"] == false:
+			var choose_block = Global.rng.randi_range(0, 1)
+			if choose_block != 0:
+				play_attack()
+			else:
+				print("blocking! turn skipped")
+				blocking = true
+				
+				await get_tree().create_timer(0.4).timeout
+				$Blocking.visible = true
+				turn_manager.turn = turn_manager.turn_type.PLAYER
 		else:
-			print("blocking! turn skipped")
-			blocking = true
-			
-			await get_tree().create_timer(0.4).timeout
-			$Blocking.visible = true
+			print("frozen! turn skipped")
+			status["frozen"] = false
 			turn_manager.turn = turn_manager.turn_type.PLAYER
-	else:
-		print("frozen! turn skipped")
-		status["frozen"] = false
-		turn_manager.turn = turn_manager.turn_type.PLAYER
 
 func take_poison_damage():
 	await get_tree().create_timer(0.3).timeout
@@ -115,26 +117,27 @@ func attack():
 	Global.player_health -= attack_power
 
 func take_damage(incoming_damage):
-	var net_damage = incoming_damage
-	
-	if status["poisoned"] == true:
-		net_damage = ceil(net_damage * 1.5)
-		status["poisoned"] = false
-	
-	if blocking:
-		net_damage = incoming_damage - floor(incoming_damage*block_strength)
-		blocking = false
+	if health > 0:
+		var net_damage = incoming_damage
 		
-		await get_tree().create_timer(0.3).timeout
-		$Blocking.visible = false
-	
-	print(incoming_damage, " ", net_damage)
-	health -= net_damage
-	
-	update_stats()
-	
-	if health <= 0:
-		die()
+		if status["poisoned"] == true:
+			net_damage = ceil(net_damage * 1.5)
+			status["poisoned"] = false
+		
+		if blocking:
+			net_damage = incoming_damage - floor(incoming_damage*block_strength)
+			blocking = false
+			
+			await get_tree().create_timer(0.3).timeout
+			$Blocking.visible = false
+		
+		print(incoming_damage, " ", net_damage)
+		health -= net_damage
+		
+		update_stats()
+		
+		if health <= 0:
+			die()
 
 func die():
 	dead = true

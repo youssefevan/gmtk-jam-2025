@@ -1,10 +1,11 @@
-[gd_scene load_steps=15 format=3 uid="uid://d1ywo38lots23"]
+[gd_scene load_steps=16 format=3 uid="uid://d1ywo38lots23"]
 
 [ext_resource type="Script" uid="uid://b445j78li567" path="res://scripts/card.gd" id="1_6u4wf"]
 [ext_resource type="Texture2D" uid="uid://2lsg83co58ov" path="res://sprites/temp-card.png" id="1_d81rb"]
-[ext_resource type="Texture2D" uid="uid://ec0rb4du5hpq" path="res://sprites/conditions/burned.png" id="2_hpf3o"]
+[ext_resource type="Texture2D" uid="uid://jfdmu7d181x1" path="res://sprites/conditions/basic.png" id="2_42b55"]
 [ext_resource type="Texture2D" uid="uid://clah4slk8ru8w" path="res://sprites/conditions/freeze.png" id="3_42b55"]
 [ext_resource type="Script" uid="uid://bghwd8bltin8" path="res://scripts/state_machine/state_manager.gd" id="3_ktuci"]
+[ext_resource type="Texture2D" uid="uid://bwf7a1jfq1vwa" path="res://sprites/conditions/heal.png" id="4_42b55"]
 [ext_resource type="Texture2D" uid="uid://brhyyugu5mbpr" path="res://sprites/conditions/fire.png" id="4_hpf3o"]
 [ext_resource type="Script" uid="uid://bp8vrtk4w8q6j" path="res://scripts/state_machine/states/idle.gd" id="4_kg30u"]
 [ext_resource type="Texture2D" uid="uid://bsgcxfx0t6em2" path="res://sprites/conditions/poison.png" id="4_xjciw"]
@@ -19,7 +20,7 @@ size = Vector2(48, 64)
 
 [node name="Card" type="Node2D"]
 script = ExtResource("1_6u4wf")
-suits = Array[Texture2D]([ExtResource("2_hpf3o"), ExtResource("3_42b55"), ExtResource("2_hpf3o"), ExtResource("4_hpf3o"), ExtResource("4_xjciw")])
+suits = Array[Texture2D]([ExtResource("2_42b55"), ExtResource("3_42b55"), ExtResource("4_42b55"), ExtResource("4_hpf3o"), ExtResource("4_xjciw")])
 
 [node name="Base" type="TextureRect" parent="."]
 anchors_preset = 8

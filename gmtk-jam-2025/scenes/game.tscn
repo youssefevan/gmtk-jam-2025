@@ -25,5 +25,7 @@ position = Vector2(992, 488)
 curve = SubResource("Curve2D_iywne")
 script = ExtResource("3_u5sy4")
 
-[node name="Enemy" parent="." instance=ExtResource("4_gee14")]
+[node name="EnemySpawn" type="Node2D" parent="."]
 position = Vector2(576, 256)
+
+[node name="Enemy" parent="EnemySpawn" instance=ExtResource("4_gee14")]

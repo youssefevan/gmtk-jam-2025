@@ -96,7 +96,7 @@ func return_to_deck():
 		Global.deck_comp[face_value] += 1
 
 func end_combat():
-	pass
+	playable = false
 
 func _on_area_area_entered(area: Area2D) -> void:
 	if area.get_collision_layer_value(2):

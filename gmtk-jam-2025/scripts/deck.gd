@@ -18,7 +18,7 @@ func draw_card():
 
 func _physics_process(delta):
 	$Debug.text = str(Global.deck_comp)
-	$PlayerStats.text = str(Global.player_health)
+	$PlayerStats.text = str("HP: ", Global.player_health)
 
 func end_combat():
 	$AnimationPlayer.play("exit")

@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://ec0rb4du5hpq"
-path="res://.godot/imported/burned.png-6f48e375ea24b5a1fa41d08cdbab6128.ctex"
+uid="uid://cyx5gnmnq3ldg"
+path="res://.godot/imported/boardQuarter.png-48662beff05d2dde6800b99fda933dc1.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://sprites/conditions/burned.png"
-dest_files=["res://.godot/imported/burned.png-6f48e375ea24b5a1fa41d08cdbab6128.ctex"]
+source_file="res://sprites/board/boardQuarter.png"
+dest_files=["res://.godot/imported/boardQuarter.png-48662beff05d2dde6800b99fda933dc1.ctex"]
 
 [params]
 
