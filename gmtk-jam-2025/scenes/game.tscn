@@ -1,9 +1,10 @@
-[gd_scene load_steps=9 format=3 uid="uid://b0d4njbsum8b3"]
+[gd_scene load_steps=11 format=3 uid="uid://b0d4njbsum8b3"]
 
 [ext_resource type="Script" uid="uid://du38ev6d3r75y" path="res://scripts/combat.gd" id="1_iywne"]
 [ext_resource type="PackedScene" uid="uid://copxl5x1spjma" path="res://scenes/deck.tscn" id="2_p57ef"]
 [ext_resource type="Shader" uid="uid://fa54nftc5had" path="res://resources/scroll.gdshader" id="2_u5sy4"]
 [ext_resource type="Script" uid="uid://ljcd42d07fnd" path="res://scripts/hand.gd" id="3_u5sy4"]
+[ext_resource type="Shader" uid="uid://b6xh1f5lth07t" path="res://resources/vignette.gdshader" id="4_gee14"]
 [ext_resource type="PackedScene" uid="uid://ckv6mdagrw36n" path="res://scenes/board.tscn" id="5_0tnpc"]
 [ext_resource type="Texture2D" uid="uid://dyxd7uo3ukoa1" path="res://sprites/board/background.png" id="5_iywne"]
 
@@ -11,6 +12,12 @@
 shader = ExtResource("2_u5sy4")
 shader_parameter/scroll_speed = Vector2(0.1, 0)
 shader_parameter/time_scale = 1.0
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_kvpfn"]
+shader = ExtResource("4_gee14")
+shader_parameter/alpha = 1.0
+shader_parameter/inner_radius = 0.19
+shader_parameter/outer_radius = 1.98
 
 [sub_resource type="Curve2D" id="Curve2D_iywne"]
 _data = {
@@ -25,8 +32,18 @@ script = ExtResource("1_iywne")
 material = SubResource("ShaderMaterial_gee14")
 offset_right = 1152.0
 offset_bottom = 648.0
+mouse_filter = 2
 texture = ExtResource("5_iywne")
 stretch_mode = 1
+
+[node name="Vingette" type="ColorRect" parent="."]
+material = SubResource("ShaderMaterial_kvpfn")
+offset_left = -64.0
+offset_top = -128.0
+offset_right = 1216.0
+offset_bottom = 672.0
+mouse_filter = 2
+color = Color(0, 0, 0, 1)
 
 [node name="board" parent="." instance=ExtResource("5_0tnpc")]
 position = Vector2(376, 56)

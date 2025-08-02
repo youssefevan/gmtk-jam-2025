@@ -72,7 +72,6 @@ libraries = {
 }
 
 [node name="Sprite" type="Sprite2D" parent="."]
-scale = Vector2(2, 2)
 texture = ExtResource("2_xwavj")
 hframes = 3
 

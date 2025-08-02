@@ -1,10 +1,17 @@
-[gd_scene load_steps=5 format=3 uid="uid://ckv6mdagrw36n"]
+[gd_scene load_steps=11 format=3 uid="uid://ckv6mdagrw36n"]
 
 [ext_resource type="Script" uid="uid://djf4b5ikrdbyn" path="res://scripts/board.gd" id="1_nglv8"]
 [ext_resource type="PackedScene" uid="uid://m2sycridxtnq" path="res://scenes/player.tscn" id="1_tx6nw"]
+[ext_resource type="Texture2D" uid="uid://jfdmu7d181x1" path="res://sprites/conditions/basic.png" id="2_n230i"]
 [ext_resource type="Texture2D" uid="uid://pic6y8u2e1fc" path="res://sprites/board/boardDone.png" id="2_nglv8"]
+[ext_resource type="Texture2D" uid="uid://2lsg83co58ov" path="res://sprites/temp-card.png" id="3_dxjtj"]
+[ext_resource type="Texture2D" uid="uid://bwf7a1jfq1vwa" path="res://sprites/conditions/heal.png" id="4_ar2e0"]
+[ext_resource type="Texture2D" uid="uid://clah4slk8ru8w" path="res://sprites/conditions/freeze.png" id="4_dun80"]
+[ext_resource type="Texture2D" uid="uid://brhyyugu5mbpr" path="res://sprites/conditions/fire.png" id="5_pnb36"]
+[ext_resource type="Texture2D" uid="uid://bsgcxfx0t6em2" path="res://sprites/conditions/poison.png" id="6_mvl7x"]
 
 [sub_resource type="Curve2D" id="Curve2D_nglv8"]
+bake_interval = 1.0
 _data = {
 "points": PackedVector2Array(0, 0, 0, 0, 30, 197, 0, 0, 0, 0, 32, 172, 0, 0, 0, 0, 37, 148, 0, 0, 0, 0, 47, 124, 0, 0, 0, 0, 59, 101, 0, 0, 0, 0, 81, 78, 0, 0, 0, 0, 106, 56, 0, 0, 0, 0, 129, 44, 0, 0, 0, 0, 153, 36, 0, 0, 0, 0, 178, 32, 0, 0, 0, 0, 202, 31, 0, 0, 0, 0, 227, 33, 0, 0, 0, 0, 251, 39, 0, 0, 0, 0, 274, 48, 0, 0, 0, 0, 296, 61, 0, 0, 0, 0, 320, 81, 0, 0, 0, 0, 342, 107, 0, 0, 0, 0, 353, 129, 0, 0, 0, 0, 362, 153, 0, 0, 0, 0, 367, 178, 0, 0, 0, 0, 368, 202, 0, 0, 0, 0, 367, 226, 0, 0, 0, 0, 360, 251, 0, 0, 0, 0, 351, 274, 0, 0, 0, 0, 337, 296, 0, 0, 0, 0, 317, 320, 0, 0, 0, 0, 291, 342, 0, 0, 0, 0, 269, 354, 0, 0, 0, 0, 246, 363, 0, 0, 0, 0, 220, 368, 0, 0, 0, 0, 197, 369, 0, 0, 0, 0, 172, 368, 0, 0, 0, 0, 147, 362, 0, 0, 0, 0, 124, 352, 0, 0, 0, 0, 102, 338, 0, 0, 0, 0, 78, 318, 0, 0, 0, 0, 58, 293, 0, 0, 0, 0, 46, 270, 0, 0, 0, 0, 37, 247, 0, 0, 0, 0, 31, 221, 0, 0, 0, 0, 30, 197)
 }
@@ -12,6 +19,7 @@ point_count = 41
 
 [node name="board" type="Node2D"]
 script = ExtResource("1_nglv8")
+suits = Array[Texture2D]([ExtResource("2_n230i"), ExtResource("4_dun80"), ExtResource("4_ar2e0"), ExtResource("5_pnb36"), ExtResource("6_mvl7x")])
 metadata/_edit_group_ = true
 
 [node name="boardTexture" type="Sprite2D" parent="."]
@@ -33,6 +41,31 @@ offset_right = -80.0
 offset_bottom = 55.0
 horizontal_alignment = 1
 vertical_alignment = 1
+
+[node name="AddCard" type="Control" parent="."]
+visible = false
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+mouse_filter = 2
+
+[node name="Label" type="Label" parent="AddCard"]
+layout_mode = 0
+offset_left = 128.0
+offset_top = 128.0
+offset_right = 264.0
+offset_bottom = 152.0
+text = "+1 card"
+horizontal_alignment = 1
+
+[node name="Card" type="Sprite2D" parent="AddCard"]
+position = Vector2(200, 200)
+texture = ExtResource("3_dxjtj")
+
+[node name="Suit" type="Sprite2D" parent="AddCard/Card"]
+scale = Vector2(3, 3)
+texture = ExtResource("4_dun80")
 
 [node name="Path2D" type="Path2D" parent="."]
 z_index = 1
