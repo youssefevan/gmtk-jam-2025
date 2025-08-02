@@ -30,7 +30,10 @@ func update_card_positions():
 			get_child(i).target_position = pos
 
 func update_hand():
-	deck.draw_card()
+	if Global.get_random_card_from_deck() == "empty" and get_child_count() <= 0:
+		Global.game_over()
+	else:
+		deck.draw_card()
 
 func end_combat():
 	var tween = get_tree().create_tween()

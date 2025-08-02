@@ -25,7 +25,7 @@ func get_random_card_from_deck():
 		total += count
 	
 	if total == 0:
-		print("no mas")
+		return "empty"
 	
 	var pick = rng.randi() % total
 	
@@ -41,3 +41,7 @@ func enter_combat():
 func exit_combat():
 	end_combat.emit()
 	print("exit combat")
+
+func game_over():
+	exit_combat()
+	print('game over')

@@ -15,6 +15,12 @@ func _ready():
 		tile.global_position = $Path2D.curve.get_point_position(point)
 
 func start_turn():
+	var tween = get_tree().create_tween()
+	tween.tween_property($boardTexture, "modulate", Color.WHITE, 0.5)
+	
+	var tween2 = get_tree().create_tween()
+	tween2.tween_property($Path2D/player/Sprite2D, "modulate", $Path2D/player.start_color, 0.5)
+	
 	$Button.disabled = false
 
 func _on_button_pressed() -> void:
@@ -41,4 +47,10 @@ func _on_button_pressed() -> void:
 	var current_tile = $Tiles.get_child(board_pos % $Path2D.curve.point_count)
 	
 	if current_tile.type == "enemy":
+		var tween = get_tree().create_tween()
+		tween.tween_property($boardTexture, "modulate", Color("ff4726"), 0.5)
+		
+		var tween2 = get_tree().create_tween()
+		tween2.tween_property($Path2D/player/Sprite2D, "modulate", Color("1b908f"), 0.5)
+		
 		Global.enter_combat()

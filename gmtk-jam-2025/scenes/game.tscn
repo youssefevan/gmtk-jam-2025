@@ -1,9 +1,16 @@
-[gd_scene load_steps=6 format=3 uid="uid://b0d4njbsum8b3"]
+[gd_scene load_steps=9 format=3 uid="uid://b0d4njbsum8b3"]
 
 [ext_resource type="Script" uid="uid://du38ev6d3r75y" path="res://scripts/combat.gd" id="1_iywne"]
 [ext_resource type="PackedScene" uid="uid://copxl5x1spjma" path="res://scenes/deck.tscn" id="2_p57ef"]
+[ext_resource type="Shader" uid="uid://fa54nftc5had" path="res://resources/scroll.gdshader" id="2_u5sy4"]
 [ext_resource type="Script" uid="uid://ljcd42d07fnd" path="res://scripts/hand.gd" id="3_u5sy4"]
 [ext_resource type="PackedScene" uid="uid://ckv6mdagrw36n" path="res://scenes/board.tscn" id="5_0tnpc"]
+[ext_resource type="Texture2D" uid="uid://dyxd7uo3ukoa1" path="res://sprites/board/background.png" id="5_iywne"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_gee14"]
+shader = ExtResource("2_u5sy4")
+shader_parameter/scroll_speed = Vector2(0.1, 0)
+shader_parameter/time_scale = 1.0
 
 [sub_resource type="Curve2D" id="Curve2D_iywne"]
 _data = {
@@ -13,6 +20,13 @@ point_count = 5
 
 [node name="Game" type="Node2D"]
 script = ExtResource("1_iywne")
+
+[node name="BG" type="TextureRect" parent="."]
+material = SubResource("ShaderMaterial_gee14")
+offset_right = 1152.0
+offset_bottom = 648.0
+texture = ExtResource("5_iywne")
+stretch_mode = 1
 
 [node name="board" parent="." instance=ExtResource("5_0tnpc")]
 position = Vector2(376, 56)

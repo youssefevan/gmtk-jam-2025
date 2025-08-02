@@ -1,11 +1,26 @@
 [gd_scene load_steps=11 format=3 uid="uid://cri5t6gqiri07"]
 
 [ext_resource type="Script" uid="uid://xb0tbdu71hys" path="res://scripts/enemy.gd" id="1_md0e3"]
-[ext_resource type="Texture2D" uid="uid://uxd00b8npui4" path="res://sprites/temp-enemy.png" id="2_4ra3w"]
+[ext_resource type="Texture2D" uid="uid://cde2xgo7i7fsw" path="res://sprites/enemy redux.png" id="2_xwavj"]
 [ext_resource type="Texture2D" uid="uid://bsgcxfx0t6em2" path="res://sprites/conditions/poison.png" id="3_4ra3w"]
 [ext_resource type="Texture2D" uid="uid://clah4slk8ru8w" path="res://sprites/conditions/freeze.png" id="4_5uy6h"]
 [ext_resource type="Texture2D" uid="uid://brhyyugu5mbpr" path="res://sprites/conditions/fire.png" id="5_xwavj"]
 [ext_resource type="Texture2D" uid="uid://ucl7wga4jknh" path="res://sprites/conditions/block.png" id="6_xwavj"]
+
+[sub_resource type="Animation" id="Animation_nenq2"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
 
 [sub_resource type="Animation" id="Animation_xwavj"]
 resource_name = "die"
@@ -38,21 +53,6 @@ tracks/1/keys = {
 }]
 }
 
-[sub_resource type="Animation" id="Animation_nenq2"]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Sprite:frame")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [0]
-}
-
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_md484"]
 _data = {
 &"RESET": SubResource("Animation_nenq2"),
@@ -72,7 +72,8 @@ libraries = {
 }
 
 [node name="Sprite" type="Sprite2D" parent="."]
-texture = ExtResource("2_4ra3w")
+scale = Vector2(2, 2)
+texture = ExtResource("2_xwavj")
 hframes = 3
 
 [node name="Collider" type="CollisionShape2D" parent="."]

@@ -1,8 +1,8 @@
 [gd_scene load_steps=5 format=3 uid="uid://ckv6mdagrw36n"]
 
-[ext_resource type="Texture2D" uid="uid://dx01vi1ggiwoj" path="res://sprites/board/boardTemplate.png" id="1_bw3vb"]
 [ext_resource type="Script" uid="uid://djf4b5ikrdbyn" path="res://scripts/board.gd" id="1_nglv8"]
 [ext_resource type="PackedScene" uid="uid://m2sycridxtnq" path="res://scenes/player.tscn" id="1_tx6nw"]
+[ext_resource type="Texture2D" uid="uid://pic6y8u2e1fc" path="res://sprites/board/boardDone.png" id="2_nglv8"]
 
 [sub_resource type="Curve2D" id="Curve2D_nglv8"]
 _data = {
@@ -16,7 +16,7 @@ metadata/_edit_group_ = true
 
 [node name="boardTexture" type="Sprite2D" parent="."]
 position = Vector2(200, 200)
-texture = ExtResource("1_bw3vb")
+texture = ExtResource("2_nglv8")
 
 [node name="Tiles" type="Node2D" parent="."]
 

@@ -70,7 +70,7 @@ func add_to_hand():
 	get_parent().remove_child(self)
 	hand.add_child(self)
 	hand.update_card_positions()
-	if hand_position:
+	if hand_position and (hand.get_child_count()-1) <= hand_position:
 		hand.move_child(self, hand_position)
 	position = hand.to_local(global_pos)
 
