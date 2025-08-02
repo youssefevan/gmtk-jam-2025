@@ -1,7 +1,7 @@
 extends Node2D
 class_name Tile
 
-var type := "card"
+var type := "enemy"
 
 var tiles = {
 	"card": 0,

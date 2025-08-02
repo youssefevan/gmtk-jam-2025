@@ -9,11 +9,9 @@ var deck
 
 func _ready():
 	Global.connect("end_combat", end_combat)
+	Global.connect("start_combat", start_combat)
 	deck = get_tree().get_first_node_in_group("Deck")
 	update_card_positions()
-	
-	for i in range(7):
-		update_hand()
 
 func update_card_positions():
 	curve.get_baked_points()
@@ -37,5 +35,15 @@ func update_hand():
 func end_combat():
 	var tween = get_tree().create_tween()
 	tween.set_trans(Tween.TRANS_CUBIC)
-	tween.tween_property(self, "global_position", global_position + Vector2(0, 200), 0.3)
+	tween.tween_property(self, "position", Vector2(0, 200), 0.3)
 	await tween.finished
+	
+	for i in get_children():
+		i.call_deferred("queue_free")
+
+func start_combat():
+	await get_tree().create_timer(0.4).timeout
+	position = Vector2.ZERO
+	
+	for i in range(7):
+		update_hand()

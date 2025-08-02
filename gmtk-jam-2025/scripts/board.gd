@@ -5,7 +5,7 @@ extends Node2D
 var board_pos = 0
 
 func _ready():
-	Global.connect("end_combat", end_combat)
+	Global.connect("end_combat", start_turn)
 	
 	for point in range($Path2D.curve.point_count):
 		$Path2D.curve.set_point_position(point, $Path2D.curve.get_point_position(point) + global_position)
@@ -14,8 +14,8 @@ func _ready():
 		$Tiles.add_child(tile)
 		tile.global_position = $Path2D.curve.get_point_position(point)
 
-func end_combat():
-	pass
+func start_turn():
+	$Button.disabled = false
 
 func _on_button_pressed() -> void:
 	var roll = randi_range(1, 6)
@@ -37,4 +37,8 @@ func _on_button_pressed() -> void:
 		await tween.finished
 	
 	board_pos += roll
-	$Button.disabled = false
+	
+	var current_tile = $Tiles.get_child(board_pos % $Path2D.curve.point_count)
+	
+	if current_tile.type == "enemy":
+		Global.enter_combat()

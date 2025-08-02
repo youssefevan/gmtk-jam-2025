@@ -18,8 +18,6 @@ var status = {
 var health : int
 var blocking := false
 
-var dead := false
-
 func _ready():
 	health = max_health
 	update_stats()
@@ -38,10 +36,10 @@ func take_turn():
 	if health > 0:
 		if status["burned"] > 0:
 			status["burned"] -= 1
-			take_poison_damage()
+			take_burn_damage()
 			await get_tree().create_timer(0.75).timeout
 			update_status()
-		
+	
 		if status["frozen"] == false:
 			var choose_block = Global.rng.randi_range(0, 1)
 			if choose_block != 0:
@@ -58,7 +56,7 @@ func take_turn():
 			status["frozen"] = false
 			turn_manager.turn = turn_manager.turn_type.PLAYER
 
-func take_poison_damage():
+func take_burn_damage():
 	await get_tree().create_timer(0.3).timeout
 	
 	var tween = get_tree().create_tween()
@@ -93,6 +91,7 @@ func update_status():
 		$Status/Burned.visible = false
 
 func play_attack():
+	#print("aatac")
 	var tween3 = get_tree().create_tween()
 	tween3.set_trans(Tween.TRANS_CUBIC)
 	tween3.tween_property($Sprite, "global_position", $Sprite.global_position - Vector2(0, 16), 0.2)
@@ -117,30 +116,29 @@ func attack():
 	Global.player_health -= attack_power
 
 func take_damage(incoming_damage):
-	if health > 0:
-		var net_damage = incoming_damage
+	var net_damage = incoming_damage
+	
+	if status["poisoned"] == true:
+		net_damage = ceil(net_damage * 1.5)
+		status["poisoned"] = false
 		
-		if status["poisoned"] == true:
-			net_damage = ceil(net_damage * 1.5)
-			status["poisoned"] = false
+	if blocking:
+		net_damage = incoming_damage - floor(incoming_damage*block_strength)
+		blocking = false
 		
-		if blocking:
-			net_damage = incoming_damage - floor(incoming_damage*block_strength)
-			blocking = false
-			
-			await get_tree().create_timer(0.3).timeout
-			$Blocking.visible = false
+		await get_tree().create_timer(0.3).timeout
+		$Blocking.visible = false
 		
-		print(incoming_damage, " ", net_damage)
-		health -= net_damage
+	print(incoming_damage, " ", net_damage)
+	health -= net_damage
+	health = clampi(health, 0, 100)
+	
+	update_stats()
 		
-		update_stats()
-		
-		if health <= 0:
-			die()
+	if health <= 0:
+		die()
 
 func die():
-	dead = true
 	$Animator.play('die')
 	
 	Global.exit_combat()

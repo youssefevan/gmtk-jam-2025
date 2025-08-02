@@ -4,6 +4,7 @@ extends Node2D
 
 func _ready():
 	Global.connect("end_combat", end_combat)
+	Global.connect("start_combat", start_combat)
 
 func draw_card():
 	var card = card_scene.instantiate()
@@ -21,4 +22,7 @@ func _physics_process(delta):
 	$PlayerStats.text = str("HP: ", Global.player_health)
 
 func end_combat():
-	$AnimationPlayer.play("exit")
+	$AnimationPlayer.play_backwards("enter")
+
+func start_combat():
+	$AnimationPlayer.play("enter")
