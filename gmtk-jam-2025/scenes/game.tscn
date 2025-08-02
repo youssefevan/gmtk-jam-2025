@@ -1,0 +1,29 @@
+[gd_scene load_steps=7 format=3 uid="uid://b0d4njbsum8b3"]
+
+[ext_resource type="Script" uid="uid://du38ev6d3r75y" path="res://scripts/combat.gd" id="1_iywne"]
+[ext_resource type="PackedScene" uid="uid://copxl5x1spjma" path="res://scenes/deck.tscn" id="2_p57ef"]
+[ext_resource type="Script" uid="uid://ljcd42d07fnd" path="res://scripts/hand.gd" id="3_u5sy4"]
+[ext_resource type="PackedScene" uid="uid://cri5t6gqiri07" path="res://scenes/enemy.tscn" id="4_gee14"]
+[ext_resource type="PackedScene" uid="uid://ckv6mdagrw36n" path="res://scenes/board.tscn" id="5_0tnpc"]
+
+[sub_resource type="Curve2D" id="Curve2D_iywne"]
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, 472, 576, 0, 0, 0, 0, 512, 552, 0, 0, 0, 0, 576, 544, 0, 0, 0, 0, 640, 552, 0, 0, 0, 0, 680, 576)
+}
+point_count = 5
+
+[node name="Game" type="Node2D"]
+script = ExtResource("1_iywne")
+
+[node name="board" parent="." instance=ExtResource("5_0tnpc")]
+position = Vector2(376, 56)
+
+[node name="Deck" parent="." instance=ExtResource("2_p57ef")]
+position = Vector2(992, 488)
+
+[node name="Hand" type="Path2D" parent="." groups=["Hand"]]
+curve = SubResource("Curve2D_iywne")
+script = ExtResource("3_u5sy4")
+
+[node name="Enemy" parent="." instance=ExtResource("4_gee14")]
+position = Vector2(576, 256)

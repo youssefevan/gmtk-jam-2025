@@ -5,7 +5,7 @@
 [ext_resource type="Texture2D" uid="uid://bsgcxfx0t6em2" path="res://sprites/conditions/poison.png" id="3_4ra3w"]
 [ext_resource type="Texture2D" uid="uid://clah4slk8ru8w" path="res://sprites/conditions/freeze.png" id="4_5uy6h"]
 [ext_resource type="Texture2D" uid="uid://c6ua8jrpyoedu" path="res://sprites/suits/suit-reflect.png" id="5_c4w8v"]
-[ext_resource type="Texture2D" uid="uid://ec0rb4du5hpq" path="res://sprites/conditions/burned.png" id="5_xwavj"]
+[ext_resource type="Texture2D" uid="uid://brhyyugu5mbpr" path="res://sprites/conditions/fire.png" id="5_xwavj"]
 
 [sub_resource type="Animation" id="Animation_xwavj"]
 resource_name = "die"
@@ -66,10 +66,10 @@ hframes = 3
 shape = SubResource("CircleShape2D_0lnsp")
 
 [node name="Stats" type="VBoxContainer" parent="."]
-offset_left = 128.0
-offset_top = -128.0
-offset_right = 192.0
-offset_bottom = -64.0
+offset_left = 84.0
+offset_top = -32.0
+offset_right = 128.0
+offset_bottom = 32.0
 
 [node name="Health" type="Label" parent="Stats"]
 layout_mode = 2
@@ -81,28 +81,33 @@ layout_mode = 2
 text = "AT:"
 vertical_alignment = 1
 
-[node name="Status" type="HBoxContainer" parent="."]
-offset_left = -192.0
-offset_top = -128.0
-offset_right = -64.0
-offset_bottom = -96.0
+[node name="Status" type="Node2D" parent="."]
 
 [node name="Poisoned" type="TextureRect" parent="Status"]
 visible = false
 custom_minimum_size = Vector2(32, 32)
-layout_mode = 2
+offset_left = -128.0
+offset_top = -48.0
+offset_right = -96.0
+offset_bottom = -16.0
 texture = ExtResource("3_4ra3w")
 
 [node name="Frozen" type="TextureRect" parent="Status"]
 visible = false
 custom_minimum_size = Vector2(32, 32)
-layout_mode = 2
+offset_left = -128.0
+offset_top = -16.0
+offset_right = -96.0
+offset_bottom = 16.0
 texture = ExtResource("4_5uy6h")
 
 [node name="Burned" type="TextureRect" parent="Status"]
 visible = false
 custom_minimum_size = Vector2(32, 32)
-layout_mode = 2
+offset_left = -128.0
+offset_top = 12.0
+offset_right = -96.0
+offset_bottom = 44.0
 texture = ExtResource("5_xwavj")
 
 [node name="Blocking" type="Sprite2D" parent="."]

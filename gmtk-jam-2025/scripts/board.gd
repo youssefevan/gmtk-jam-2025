@@ -1,6 +1,21 @@
 extends Node2D
 
+@onready var tile_scene = preload("res://scenes/tile.tscn")
+
 var board_pos = 0
+
+func _ready():
+	Global.connect("end_combat", end_combat)
+	
+	for point in range($Path2D.curve.point_count):
+		$Path2D.curve.set_point_position(point, $Path2D.curve.get_point_position(point) + global_position)
+		
+		var tile = tile_scene.instantiate()
+		$Tiles.add_child(tile)
+		tile.global_position = $Path2D.curve.get_point_position(point)
+
+func end_combat():
+	pass
 
 func _on_button_pressed() -> void:
 	var roll = randi_range(1, 6)

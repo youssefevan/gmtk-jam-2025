@@ -8,6 +8,7 @@ var deck
 @onready var turn_manager = preload("res://resources/turn_manager.tres")
 
 func _ready():
+	Global.connect("end_combat", end_combat)
 	deck = get_tree().get_first_node_in_group("Deck")
 	update_card_positions()
 	
@@ -32,3 +33,6 @@ func update_card_positions():
 
 func update_hand():
 	deck.draw_card()
+
+func end_combat():
+	pass

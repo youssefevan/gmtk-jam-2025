@@ -20,13 +20,11 @@ var blocking := false
 
 var dead := false
 
-var rng = RandomNumberGenerator.new()
-
 func _ready():
-	rng.randomize()
 	health = max_health
 	update_stats()
 	turn_manager.connect("start_enemy_turn", take_turn)
+	Global.connect("end_combat", end_combat)
 
 func update_stats():
 	$Stats/Health.text = str("HP: ", health)
@@ -43,7 +41,7 @@ func take_turn():
 		update_status()
 	
 	if status["frozen"] == false:
-		var choose_block = rng.randi_range(0, 1)
+		var choose_block = Global.rng.randi_range(0, 1)
 		if choose_block != 0:
 			play_attack()
 		else:
@@ -143,3 +141,6 @@ func die():
 	$Animator.play('die')
 	
 	Global.exit_combat()
+
+func end_combat():
+	pass

@@ -2,6 +2,9 @@ extends Node2D
 
 @export var card_scene = preload("res://scenes/card.tscn")
 
+func _ready():
+	Global.connect("end_combat", end_combat)
+
 func draw_card():
 	var card = card_scene.instantiate()
 	
@@ -16,3 +19,6 @@ func draw_card():
 func _physics_process(delta):
 	$Debug.text = str(Global.deck_comp)
 	$PlayerStats.text = str(Global.player_health)
+
+func end_combat():
+	$AnimationPlayer.play("exit")
