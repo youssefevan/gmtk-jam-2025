@@ -57,6 +57,7 @@ func _on_button_pressed() -> void:
 	handle_movement(Global.rng.randi_range(1, 6))
 
 func handle_movement(roll):
+	roll = clampi(roll, max(-board_pos, -6), 6)
 	$Number.frame = abs(roll)
 	
 	$Roll.play()
