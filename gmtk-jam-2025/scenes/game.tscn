@@ -154,3 +154,12 @@ texture = ExtResource("8_gee14")
 libraries = {
 &"": SubResource("AnimationLibrary_vtaks")
 }
+
+[node name="Loop" type="Label" parent="."]
+offset_left = 384.0
+offset_top = 32.0
+offset_right = 768.0
+offset_bottom = 64.0
+text = "Loop:"
+horizontal_alignment = 1
+vertical_alignment = 1

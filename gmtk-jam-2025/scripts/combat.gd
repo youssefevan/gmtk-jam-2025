@@ -19,6 +19,9 @@ func start_player_turn():
 func start_enemy_turn():
 	pass
 
+func _physics_process(delta):
+	$Loop.text = str("Loop: ", Global.loop)
+
 func start_combat():
 	var e = enemy.instantiate()
 	e.boss = boss_fight
