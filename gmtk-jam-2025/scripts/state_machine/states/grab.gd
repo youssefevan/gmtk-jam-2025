@@ -6,6 +6,8 @@ func enter():
 	super.enter()
 	entity.remove_from_hand(entity.get_global_mouse_position())
 	entity.hand.update_card_positions()
+	
+	entity.audio_grab.play()
 
 func physics_update(delta):
 	super.physics_update(delta)

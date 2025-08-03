@@ -40,7 +40,7 @@ func update_stats():
 	$Stats/Attack.text = str("AT: ", attack_power)
 
 func take_turn():
-	await get_tree().create_timer(1.5).timeout
+	await get_tree().create_timer(1.0).timeout
 	update_status()
 	
 	if health > 0:
@@ -51,7 +51,7 @@ func take_turn():
 			update_status()
 	
 		if status["frozen"] == false:
-			var choose_block = Global.rng.randi_range(0, 1)
+			var choose_block = Global.rng.randi_range(0, 4)
 			if choose_block != 0:
 				play_attack()
 			else:
@@ -68,6 +68,8 @@ func take_turn():
 
 func take_burn_damage():
 	await get_tree().create_timer(0.3).timeout
+	
+	$Burn.play()
 	
 	var tween = get_tree().create_tween()
 	tween.set_trans(Tween.TRANS_CUBIC)
@@ -102,6 +104,7 @@ func update_status():
 		$Status/Burned.visible = false
 
 func play_attack():
+	$Hit.play()
 	if health > 0:
 		#print("aatac")
 		var tween3 = get_tree().create_tween()

@@ -28,3 +28,4 @@ func end_combat():
 
 func start_combat():
 	$AnimationPlayer.play("enter")
+	$Deal.play()

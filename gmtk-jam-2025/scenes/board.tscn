@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://ckv6mdagrw36n"]
+[gd_scene load_steps=17 format=3 uid="uid://ckv6mdagrw36n"]
 
 [ext_resource type="Script" uid="uid://djf4b5ikrdbyn" path="res://scripts/board.gd" id="1_nglv8"]
 [ext_resource type="PackedScene" uid="uid://m2sycridxtnq" path="res://scenes/player.tscn" id="1_tx6nw"]
@@ -10,6 +10,8 @@
 [ext_resource type="Texture2D" uid="uid://brhyyugu5mbpr" path="res://sprites/conditions/fire.png" id="5_pnb36"]
 [ext_resource type="Texture2D" uid="uid://bsgcxfx0t6em2" path="res://sprites/conditions/poison.png" id="6_mvl7x"]
 [ext_resource type="Texture2D" uid="uid://c0dhihkafwajl" path="res://sprites/dice.png" id="8_ar2e0"]
+[ext_resource type="AudioStream" uid="uid://bu2yjmwbxmkwt" path="res://audio/kenney_casino-audio/Audio/dice-throw-2.ogg" id="11_pnb36"]
+[ext_resource type="AudioStream" uid="uid://dy4ew64or7yso" path="res://audio/kenney_casino-audio/Audio/chip-lay-1.ogg" id="12_mvl7x"]
 
 [sub_resource type="Animation" id="Animation_ar2e0"]
 length = 0.001
@@ -116,5 +118,11 @@ curve = SubResource("Curve2D_nglv8")
 [node name="player" parent="Path2D" instance=ExtResource("1_tx6nw")]
 z_index = 1
 position = Vector2(28, 200)
+
+[node name="Roll" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("11_pnb36")
+
+[node name="Move" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("12_mvl7x")
 
 [connection signal="pressed" from="Button" to="." method="_on_button_pressed"]

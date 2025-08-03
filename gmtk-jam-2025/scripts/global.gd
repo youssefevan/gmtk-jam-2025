@@ -7,6 +7,8 @@ signal game_end
 
 var player_health := 20
 
+@onready var music = preload("res://audio/cave themeb4.ogg")
+
 var starting_deck = {
 	"Physical": 12,
 	"Fire": 4,
@@ -24,11 +26,17 @@ var loop := 1
 func _ready():
 	reset()
 	rng.randomize()
+	
+	var audio_player = AudioStreamPlayer2D.new()
+	add_child(audio_player)
+	audio_player.volume_db = -5.0
+	audio_player.stream = music
+	audio_player.play()
 
 func reset():
 	deck_comp = starting_deck
 	loop = 1
-	player_health = 1
+	player_health = 20
 	rng.randomize()
 
 func get_random_card_from_deck():

@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://cri5t6gqiri07"]
+[gd_scene load_steps=13 format=3 uid="uid://cri5t6gqiri07"]
 
 [ext_resource type="Script" uid="uid://xb0tbdu71hys" path="res://scripts/enemy.gd" id="1_md0e3"]
 [ext_resource type="Texture2D" uid="uid://cde2xgo7i7fsw" path="res://sprites/enemy redux.png" id="2_xwavj"]
@@ -6,6 +6,8 @@
 [ext_resource type="Texture2D" uid="uid://clah4slk8ru8w" path="res://sprites/conditions/freeze.png" id="4_5uy6h"]
 [ext_resource type="Texture2D" uid="uid://brhyyugu5mbpr" path="res://sprites/conditions/fire.png" id="5_xwavj"]
 [ext_resource type="Texture2D" uid="uid://ucl7wga4jknh" path="res://sprites/conditions/block.png" id="6_xwavj"]
+[ext_resource type="AudioStream" uid="uid://bmb426shpwsad" path="res://audio/NenadSimic - Muffled Distant Explosion.wav" id="7_nenq2"]
+[ext_resource type="AudioStream" uid="uid://uid612831pcx" path="res://audio/lava.ogg" id="8_md484"]
 
 [sub_resource type="Animation" id="Animation_nenq2"]
 length = 0.001
@@ -153,3 +155,9 @@ visible = false
 position = Vector2(0, 96)
 scale = Vector2(4, 4)
 texture = ExtResource("6_xwavj")
+
+[node name="Hit" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("7_nenq2")
+
+[node name="Burn" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("8_md484")

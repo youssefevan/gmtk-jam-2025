@@ -1,7 +1,8 @@
-[gd_scene load_steps=6 format=3 uid="uid://copxl5x1spjma"]
+[gd_scene load_steps=7 format=3 uid="uid://copxl5x1spjma"]
 
 [ext_resource type="Script" uid="uid://xdqpu2i37ti2" path="res://scripts/deck.gd" id="1_6rnap"]
 [ext_resource type="Texture2D" uid="uid://b7ht1wm15pimy" path="res://sprites/deck.png" id="2_gdbsr"]
+[ext_resource type="AudioStream" uid="uid://ckbqgm2we7k4y" path="res://audio/shuffle.wav" id="3_gdbsr"]
 
 [sub_resource type="Animation" id="Animation_gdbsr"]
 length = 0.001
@@ -71,3 +72,6 @@ vertical_alignment = 1
 libraries = {
 &"": SubResource("AnimationLibrary_er72m")
 }
+
+[node name="Deal" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("3_gdbsr")

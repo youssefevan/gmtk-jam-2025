@@ -16,6 +16,9 @@ class_name Card
 
 @onready var animator = $AnimationPlayer
 
+@onready var audio_play = $Play
+@onready var audio_grab = $Grab
+
 var damage
 
 var target

@@ -30,6 +30,8 @@ func move_to_target():
 	play_anim()
 
 func play_anim():
+	entity.audio_play.play()
+	
 	var tween = get_tree().create_tween()
 	tween.set_trans(Tween.TRANS_CUBIC)
 	tween.tween_property(entity, "global_position", entity.global_position - Vector2(0, 16), 0.075)
