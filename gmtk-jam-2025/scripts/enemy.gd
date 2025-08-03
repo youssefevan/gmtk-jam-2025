@@ -18,22 +18,29 @@ var status = {
 var health : int
 var blocking := false
 
+var boss := false
+
 func _ready():
-	max_health = Global.rng.randi_range(3, 6) * Global.loop
-	attack_power = Global.rng.randi_range(1, 4) + (Global.loop * 2)
+	if !boss:
+		max_health = Global.rng.randi_range(3, 6) * Global.loop
+		attack_power = Global.rng.randi_range(1, 4) + (Global.loop * 2)
+	else:
+		max_health = Global.rng.randi_range(3, 6) * Global.loop * 2
+		attack_power = Global.rng.randi_range(1, 4) + (Global.loop * 4)
+		$Sprite.texture = load("res://sprites/boss.png")
 	
 	health = max_health
 	update_stats()
 	turn_manager.connect("start_enemy_turn", take_turn)
 	Global.connect("end_combat", end_combat)
+	Global.connect("game_end", game_end)
 
 func update_stats():
 	$Stats/Health.text = str("HP: ", health)
 	$Stats/Attack.text = str("AT: ", attack_power)
 
 func take_turn():
-	await get_tree().create_timer(0.9).timeout
-	
+	await get_tree().create_timer(1.5).timeout
 	update_status()
 	
 	if health > 0:
@@ -95,29 +102,32 @@ func update_status():
 		$Status/Burned.visible = false
 
 func play_attack():
-	#print("aatac")
-	var tween3 = get_tree().create_tween()
-	tween3.set_trans(Tween.TRANS_CUBIC)
-	tween3.tween_property($Sprite, "global_position", $Sprite.global_position - Vector2(0, 16), 0.2)
-	await tween3.finished
-	
-	var tween = get_tree().create_tween()
-	tween.set_trans(Tween.TRANS_CUBIC)
-	tween.tween_property($Sprite, "global_position", $Sprite.global_position + Vector2(0, 32), 0.075)
-	await tween.finished
-	
-	# deal damage
-	attack()
-	
-	turn_manager.turn = turn_manager.turn_type.PLAYER
-	
-	var tween2 = get_tree().create_tween()
-	tween.set_trans(Tween.TRANS_CUBIC)
-	tween2.tween_property($Sprite, "global_position", $Sprite.global_position - Vector2(0, 16), 0.2)
-	await tween2.finished
+	if health > 0:
+		#print("aatac")
+		var tween3 = get_tree().create_tween()
+		tween3.set_trans(Tween.TRANS_CUBIC)
+		tween3.tween_property($Sprite, "global_position", $Sprite.global_position - Vector2(0, 16), 0.2)
+		await tween3.finished
+		
+		var tween = get_tree().create_tween()
+		tween.set_trans(Tween.TRANS_CUBIC)
+		tween.tween_property($Sprite, "global_position", $Sprite.global_position + Vector2(0, 32), 0.075)
+		await tween.finished
+		
+		# deal damage
+		attack()
+		
+		turn_manager.turn = turn_manager.turn_type.PLAYER
+		
+		var tween2 = get_tree().create_tween()
+		tween.set_trans(Tween.TRANS_CUBIC)
+		tween2.tween_property($Sprite, "global_position", $Sprite.global_position - Vector2(0, 16), 0.2)
+		await tween2.finished
 
 func attack():
 	Global.player_health -= attack_power
+	if Global.player_health <= 0:
+		Global.game_over()
 
 func take_damage(incoming_damage):
 	var net_damage = incoming_damage
@@ -154,8 +164,10 @@ func take_damage(incoming_damage):
 
 func die():
 	$Animator.play('die')
-	
 	Global.exit_combat()
 
 func end_combat():
 	pass
+
+func game_end():
+	call_deferred("queue_free")

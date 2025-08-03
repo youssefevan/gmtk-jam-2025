@@ -31,6 +31,8 @@ var hand_position : int
 
 var target_position
 
+var in_combat := true
+
 @onready var base = $Base
 
 func _ready() -> void:
@@ -86,6 +88,7 @@ func attack():
 		"Poison":
 			target.apply_status("poisoned")
 		"Heal":
+			print(get_parent().heal_anim())
 			Global.player_health += damage
 		_:
 			pass
@@ -98,6 +101,7 @@ func return_to_deck():
 
 func end_combat():
 	playable = false
+	in_combat = false
 	return_to_deck()
 
 func _on_area_area_entered(area: Area2D) -> void:

@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://b0d4njbsum8b3"]
+[gd_scene load_steps=15 format=3 uid="uid://b0d4njbsum8b3"]
 
 [ext_resource type="Script" uid="uid://du38ev6d3r75y" path="res://scripts/combat.gd" id="1_iywne"]
 [ext_resource type="PackedScene" uid="uid://copxl5x1spjma" path="res://scenes/deck.tscn" id="2_p57ef"]
@@ -7,6 +7,7 @@
 [ext_resource type="Shader" uid="uid://b6xh1f5lth07t" path="res://resources/vignette.gdshader" id="4_gee14"]
 [ext_resource type="PackedScene" uid="uid://ckv6mdagrw36n" path="res://scenes/board.tscn" id="5_0tnpc"]
 [ext_resource type="Texture2D" uid="uid://dyxd7uo3ukoa1" path="res://sprites/board/background.png" id="5_iywne"]
+[ext_resource type="Texture2D" uid="uid://bwf7a1jfq1vwa" path="res://sprites/conditions/heal.png" id="8_gee14"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_gee14"]
 shader = ExtResource("2_u5sy4")
@@ -24,6 +25,91 @@ _data = {
 "points": PackedVector2Array(0, 0, 0, 0, 472, 576, 0, 0, 0, 0, 512, 552, 0, 0, 0, 0, 576, 544, 0, 0, 0, 0, 640, 552, 0, 0, 0, 0, 680, 576)
 }
 point_count = 5
+
+[sub_resource type="Animation" id="Animation_gee14"]
+resource_name = "heal"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Heal:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [true, false]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Heal:modulate")
+tracks/1/interp = 2
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Heal:position")
+tracks/2/interp = 2
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(992, 408), Vector2(992, 400)]
+}
+
+[sub_resource type="Animation" id="Animation_0tnpc"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Heal:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Heal:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Heal:position")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(992, 408)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_vtaks"]
+_data = {
+&"RESET": SubResource("Animation_0tnpc"),
+&"heal": SubResource("Animation_gee14")
+}
 
 [node name="Game" type="Node2D"]
 script = ExtResource("1_iywne")
@@ -57,3 +143,14 @@ script = ExtResource("3_u5sy4")
 
 [node name="EnemySpawn" type="Node2D" parent="."]
 position = Vector2(576, 256)
+
+[node name="Heal" type="Sprite2D" parent="."]
+visible = false
+position = Vector2(992, 408)
+scale = Vector2(3.5, 3.5)
+texture = ExtResource("8_gee14")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_vtaks")
+}

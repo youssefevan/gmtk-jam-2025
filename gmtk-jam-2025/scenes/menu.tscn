@@ -1,0 +1,66 @@
+[gd_scene load_steps=7 format=3 uid="uid://dvvbr1yhr4d8a"]
+
+[ext_resource type="Shader" uid="uid://fa54nftc5had" path="res://resources/scroll.gdshader" id="1_con2f"]
+[ext_resource type="Script" uid="uid://dl2xj22bqyl7u" path="res://scripts/menu.gd" id="1_mhnvy"]
+[ext_resource type="Texture2D" uid="uid://dyxd7uo3ukoa1" path="res://sprites/board/background.png" id="2_mhnvy"]
+[ext_resource type="Shader" uid="uid://b6xh1f5lth07t" path="res://resources/vignette.gdshader" id="3_4ytvr"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_g3eks"]
+shader = ExtResource("1_con2f")
+shader_parameter/scroll_speed = Vector2(0.1, 0)
+shader_parameter/time_scale = 1.0
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_v86rl"]
+shader = ExtResource("3_4ytvr")
+shader_parameter/alpha = 1.0
+shader_parameter/inner_radius = 0.19
+shader_parameter/outer_radius = 1.98
+
+[node name="Menu" type="Node2D"]
+script = ExtResource("1_mhnvy")
+
+[node name="BG" type="TextureRect" parent="."]
+material = SubResource("ShaderMaterial_g3eks")
+offset_right = 1152.0
+offset_bottom = 648.0
+mouse_filter = 2
+texture = ExtResource("2_mhnvy")
+stretch_mode = 1
+
+[node name="Vingette" type="ColorRect" parent="."]
+material = SubResource("ShaderMaterial_v86rl")
+offset_left = -64.0
+offset_top = -128.0
+offset_right = 1216.0
+offset_bottom = 672.0
+mouse_filter = 2
+color = Color(0, 0, 0, 1)
+
+[node name="VBox" type="VBoxContainer" parent="."]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 416.0
+offset_top = 128.0
+offset_right = 800.0
+offset_bottom = 449.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+alignment = 1
+
+[node name="Title" type="Label" parent="VBox"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 64
+text = "Snake Eater"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Button" type="Button" parent="VBox"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 32
+text = "Play"
+
+[connection signal="pressed" from="VBox/Button" to="." method="_on_button_pressed"]

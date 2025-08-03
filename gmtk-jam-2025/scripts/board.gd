@@ -8,13 +8,17 @@ var board_pos = 0
 func _ready():
 	Global.connect("end_combat", start_turn)
 	Global.connect("start_combat", start_combat)
+	
+	for point in range($Path2D.curve.point_count):
+		$Path2D.curve.set_point_position(point, $Path2D.curve.get_point_position(point) + global_position)
+	
 	set_tiles()
 
 func set_tiles():
+	for child in $Tiles.get_child_count():
+		$Tiles.get_child(child).call_deferred("free")
+	
 	for point in range($Path2D.curve.point_count):
-		$Path2D.curve.set_point_position(point, $Path2D.curve.get_point_position(point) + global_position)
-		
-		
 		var tile = tile_scene.instantiate()
 		if point == 0:
 			tile.type = "boss"
@@ -43,12 +47,13 @@ func start_turn():
 	$Button.disabled = false
 	
 	var tween3 = get_tree().create_tween()
+	tween3.set_trans(Tween.TRANS_CUBIC)
 	tween3.tween_property($Button, "modulate", Color("ffffffff"), 0.5)
 	await tween3.finished
 
 func _on_button_pressed() -> void:
 	var roll = randi_range(1, 6)
-	$Number.text = str(roll)
+	$Number.frame = roll
 	
 	$Button.disabled = true
 	$Number.visible = true
@@ -91,51 +96,67 @@ func _on_button_pressed() -> void:
 		
 		board_pos = 0
 		Global.new_loop()
+		set_tiles()
 	
 	var current_tile = $Tiles.get_child(board_pos % $Path2D.curve.point_count)
 	
 	if current_tile.type == "enemy":
-		var tween = get_tree().create_tween()
-		tween.tween_property($boardTexture, "modulate", Color("ff4726"), 0.5)
+		enemy_encounter(false)
 		
-		var tween2 = get_tree().create_tween()
-		tween2.tween_property($Path2D/player/Sprite2D, "modulate", Color("1b908f"), 0.5)
-		
-		Global.enter_combat()
 	elif current_tile.type == "boss":
-		var tween = get_tree().create_tween()
-		tween.tween_property($boardTexture, "modulate", Color("ff4726"), 0.5)
-		
-		var tween2 = get_tree().create_tween()
-		tween2.tween_property($Path2D/player/Sprite2D, "modulate", Color("1b908f"), 0.5)
-		
-		Global.enter_combat()
+		enemy_encounter(true)
 	
 	elif current_tile.type == "card":
-		var suit = Global.rng.randi_range(0, 4)
-		var amount = Global.rng.randi_range(2, 5)
-		match suit:
-			0:
-				Global.deck_comp["Physical"] += amount
-			1:
-				Global.deck_comp["Freeze"] += amount
-			2:
-				Global.deck_comp["Heal"] += amount
-			3:
-				Global.deck_comp["Fire"] += amount
-			4:
-				Global.deck_comp["Poison"] += amount
-		
-		$AddCard/Label.text = str("+", amount, " cards")
-		$AddCard/Card/Suit.texture = suits[suit]
-		$AddCard/Animator.play("show")
-		await $AddCard/Animator.animation_finished
-		start_turn()
+		add_card_encounter()
 	
 	elif current_tile.type == "chance":
-		Global.enter_combat()
+		pick_encounter()
+
+func add_card_encounter():
+	var suit = Global.rng.randi_range(0, 4)
+	var amount = Global.rng.randi_range(2, 5)
+	match suit:
+		0:
+			Global.deck_comp["Physical"] += amount
+		1:
+			Global.deck_comp["Freeze"] += amount
+		2:
+			Global.deck_comp["Heal"] += amount
+		3:
+			Global.deck_comp["Fire"] += amount
+		4:
+			Global.deck_comp["Poison"] += amount
+	
+	$AddCard/Label.text = str("+", amount, " cards")
+	$AddCard/Card/Suit.texture = suits[suit]
+	$AddCard/Animator.play("show")
+	await $AddCard/Animator.animation_finished
+	start_turn()
+
+func pick_encounter():
+	var encounter = Global.rng.randi_range(0, 1)
+	match encounter:
+		0:
+			add_card_encounter()
+		1:
+			enemy_encounter(false)
+
+func enemy_encounter(is_boss):
+	var tween = get_tree().create_tween()
+	tween.tween_property($boardTexture, "modulate", Color("ff4726"), 0.5)
+	
+	var tween2 = get_tree().create_tween()
+	tween2.tween_property($Path2D/player/Sprite2D, "modulate", Color("1b908f"), 0.5)
+	
+	if is_boss:
+		get_parent().boss_fight = true
+	else:
+		get_parent().boss_fight = false
+	
+	Global.enter_combat()
 
 func start_combat():
 	$Number.visible = false
 	var tween3 = get_tree().create_tween()
+	tween3.set_trans(Tween.TRANS_CUBIC)
 	tween3.tween_property($Button, "modulate", Color("ffffff00"), 0.5)

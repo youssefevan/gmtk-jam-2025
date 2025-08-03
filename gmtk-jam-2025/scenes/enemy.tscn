@@ -100,6 +100,7 @@ texture = ExtResource("2_xwavj")
 hframes = 3
 
 [node name="Collider" type="CollisionShape2D" parent="."]
+visible = false
 shape = SubResource("CircleShape2D_0lnsp")
 
 [node name="Stats" type="VBoxContainer" parent="."]

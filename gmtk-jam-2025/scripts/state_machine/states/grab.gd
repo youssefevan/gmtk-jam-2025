@@ -26,7 +26,7 @@ func physics_update(delta):
 		entity.base.modulate = Color.WHITE
 	
 	if Input.is_action_just_released("click"):
-		if entity.playable:
+		if entity.playable and entity.in_combat:
 			if entity.turn_manager.turn == entity.turn_manager.turn_type.PLAYER:
 				return entity.play
 			else:

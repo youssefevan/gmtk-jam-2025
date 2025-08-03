@@ -3,10 +3,11 @@ extends Node
 signal start_combat
 signal end_combat
 signal start_new_loop
+signal game_end
 
-var player_health := 30
+var player_health := 20
 
-var deck_comp = {
+var starting_deck = {
 	"Physical": 12,
 	"Fire": 4,
 	"Freeze": 4,
@@ -14,11 +15,20 @@ var deck_comp = {
 	"Heal": 2,
 }
 
+var deck_comp
+
 var rng = RandomNumberGenerator.new()
 
 var loop := 1
 
 func _ready():
+	reset()
+	rng.randomize()
+
+func reset():
+	deck_comp = starting_deck
+	loop = 1
+	player_health = 1
 	rng.randomize()
 
 func get_random_card_from_deck():
@@ -52,4 +62,5 @@ func new_loop():
 
 func game_over():
 	exit_combat()
-	print('game over')
+	print('test')
+	game_end.emit()
