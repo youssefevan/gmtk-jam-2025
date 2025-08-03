@@ -14,7 +14,7 @@ var starting_deck = {
 	"Fire": 4,
 	"Freeze": 4,
 	"Poison": 4,
-	"Heal": 2,
+	"Heal": 4,
 }
 
 var deck_comp
