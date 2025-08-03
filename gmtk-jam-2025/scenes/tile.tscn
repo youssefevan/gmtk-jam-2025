@@ -8,4 +8,4 @@ script = ExtResource("1_ywnoi")
 
 [node name="Sprite" type="Sprite2D" parent="."]
 texture = ExtResource("1_3dk36")
-hframes = 4
+hframes = 5

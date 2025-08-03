@@ -8,6 +8,7 @@ var tiles = {
 	"chance": 1,
 	"enemy": 2,
 	"boss": 3,
+	"move": 4,
 }
 
 func _ready():

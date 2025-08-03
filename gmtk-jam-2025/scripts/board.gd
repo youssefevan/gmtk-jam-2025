@@ -23,13 +23,15 @@ func set_tiles():
 		if point == 0:
 			tile.type = "boss"
 		else:
-			match Global.rng.randi_range(0, 2):
+			match Global.rng.randi_range(0, 3):
 				0:
 					tile.type = "card"
 				1:
 					tile.type = "chance"
 				2:
 					tile.type = "enemy"
+				3:
+					tile.type = "move"
 		
 		$Tiles.add_child(tile)
 		tile.global_position = $Path2D.curve.get_point_position(point)
@@ -52,8 +54,10 @@ func start_turn():
 	await tween3.finished
 
 func _on_button_pressed() -> void:
-	var roll = randi_range(1, 6)
-	$Number.frame = roll
+	handle_movement(Global.rng.randi_range(1, 6))
+
+func handle_movement(roll):
+	$Number.frame = abs(roll)
 	
 	$Roll.play()
 	
@@ -61,17 +65,25 @@ func _on_button_pressed() -> void:
 	$Number.visible = true
 	
 	await get_tree().create_timer(0.3).timeout
-	
+	print(roll)
 	if (board_pos + roll) < $Path2D.curve.point_count:
-		for i in range(roll):
+		for i in range(abs(roll)):
 			var tween = get_tree().create_tween()
 			tween.set_trans(Tween.TRANS_CUBIC)
-			tween.tween_property(
-				$Path2D/player,
-				"global_position",
-				$Path2D.curve.get_point_position(board_pos + (i+1)),
-				0.2
-			)
+			if roll >= 0:
+				tween.tween_property(
+					$Path2D/player,
+					"global_position",
+					$Path2D.curve.get_point_position(board_pos + (i+1)),
+					0.2
+				)
+			else:
+				tween.tween_property(
+					$Path2D/player,
+					"global_position",
+					$Path2D.curve.get_point_position(board_pos - (i+1)),
+					0.2
+				)
 			$Move.play()
 			await tween.finished
 		board_pos += roll
@@ -115,7 +127,12 @@ func _on_button_pressed() -> void:
 	
 	elif current_tile.type == "chance":
 		pick_encounter()
+	
+	elif current_tile.type == "move":
+		move_encounter()
 
+func move_encounter():
+	handle_movement(Global.rng.randi_range(-6, 6))
 
 func add_card_encounter():
 	var suit = Global.rng.randi_range(0, 4)
@@ -139,12 +156,14 @@ func add_card_encounter():
 	start_turn()
 
 func pick_encounter():
-	var encounter = Global.rng.randi_range(0, 1)
+	var encounter = Global.rng.randi_range(0, 2)
 	match encounter:
 		0:
 			add_card_encounter()
 		1:
 			enemy_encounter(false)
+		2:
+			move_encounter()
 
 func enemy_encounter(is_boss):
 	var tween = get_tree().create_tween()

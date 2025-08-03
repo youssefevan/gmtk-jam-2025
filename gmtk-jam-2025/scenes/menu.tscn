@@ -4,7 +4,7 @@
 [ext_resource type="Script" uid="uid://dl2xj22bqyl7u" path="res://scripts/menu.gd" id="1_mhnvy"]
 [ext_resource type="Texture2D" uid="uid://dyxd7uo3ukoa1" path="res://sprites/board/background.png" id="2_mhnvy"]
 [ext_resource type="Shader" uid="uid://b6xh1f5lth07t" path="res://resources/vignette.gdshader" id="3_4ytvr"]
-[ext_resource type="Texture2D" uid="uid://ckladqdeffeoc" path="res://sprites/titlecard.png" id="5_4ytvr"]
+[ext_resource type="Texture2D" uid="uid://cy5dx6yjfbjlo" path="res://sprites/titlecard.png" id="5_4ytvr"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_g3eks"]
 shader = ExtResource("1_con2f")
