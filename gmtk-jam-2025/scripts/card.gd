@@ -86,20 +86,21 @@ func add_to_hand():
 	position = hand.to_local(global_pos)
 
 func attack():
-	match face_value:
-		"Freeze":
-			target.apply_status("frozen")
-		"Fire":
-			target.apply_status("burned")
-		"Poison":
-			target.apply_status("poisoned")
-		"Heal":
-			print(get_parent().heal_anim())
-			Global.player_health += damage
-		_:
-			target.take_damage(damage)
+	if target:
+		match face_value:
+			"Freeze":
+				target.apply_status("frozen")
+			"Fire":
+				target.apply_status("burned")
+			"Poison":
+				target.apply_status("poisoned")
+			"Heal":
+				print(get_parent().heal_anim())
+				Global.player_health += damage
+			_:
+				target.take_damage(damage)
 	
-	turn_manager.start_enemy_turn
+	turn_manager.start_enemy_turn	
 
 func return_to_deck():
 	if states.current_state != play and states.current_state != discard:

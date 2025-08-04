@@ -26,7 +26,7 @@ func _ready():
 		attack_power = Global.rng.randi_range(1, 4) + (Global.loop * 2)
 	else:
 		max_health = ceil(Global.rng.randi_range(3, 6) * Global.loop * 1.5)
-		attack_power = Global.rng.randi_range(1, 4) + (Global.loop * 2)
+		attack_power = ceil(Global.rng.randi_range(1, 4) + Global.loop * 1.5)
 		$Sprite.texture = load("res://sprites/boss.png")
 	
 	health = max_health
