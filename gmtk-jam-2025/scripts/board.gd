@@ -137,10 +137,10 @@ func move_encounter():
 
 func add_card_encounter():
 	var suit = Global.rng.randi_range(0, 4)
-	var amount = Global.rng.randi_range(2, 5)
+	var amount = Global.rng.randi_range(2, 4)
 	match suit:
 		0:
-			Global.deck_comp["Physical"] += amount
+			Global.deck_comp["Physical"] += amount * 2
 		1:
 			Global.deck_comp["Freeze"] += amount
 		2:

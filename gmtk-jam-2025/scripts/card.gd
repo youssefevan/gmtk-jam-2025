@@ -42,12 +42,16 @@ func _ready() -> void:
 	states.init(self)
 	hand = get_tree().get_first_node_in_group("Hand")
 	
-	damage = Global.rng.randi_range(0, 3) + Global.loop
+	damage = Global.rng.randi_range(2, 5) + Global.loop
 	
 	Global.connect("end_combat", end_combat)
 	
 	$Suit.texture = suits[calculate_suit()]
-	$Number.text = str(damage)
+	
+	if calculate_suit() == 0 or calculate_suit() == 2:
+		$Number.text = str(damage)
+	else:
+		$Number.visible = false
 
 func calculate_suit():
 	match face_value:
@@ -82,7 +86,6 @@ func add_to_hand():
 	position = hand.to_local(global_pos)
 
 func attack():
-	target.take_damage(damage)
 	match face_value:
 		"Freeze":
 			target.apply_status("frozen")
@@ -94,7 +97,7 @@ func attack():
 			print(get_parent().heal_anim())
 			Global.player_health += damage
 		_:
-			pass
+			target.take_damage(damage)
 	
 	turn_manager.start_enemy_turn
 

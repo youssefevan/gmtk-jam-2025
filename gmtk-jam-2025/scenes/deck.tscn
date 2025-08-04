@@ -52,11 +52,9 @@ scale = Vector2(2, 2)
 texture = ExtResource("2_gdbsr")
 
 [node name="Debug" type="Label" parent="."]
-visible = false
-offset_left = -224.0
+offset_left = -128.0
 offset_top = -232.0
-offset_right = -96.0
-offset_bottom = 152.0
+text = "debug"
 autowrap_mode = 2
 
 [node name="PlayerStats" type="Label" parent="."]

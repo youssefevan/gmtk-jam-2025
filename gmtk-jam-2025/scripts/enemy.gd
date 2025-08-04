@@ -10,7 +10,7 @@ class_name Enemy
 @onready var turn_manager = preload("res://resources/turn_manager.tres")
 
 var status = {
-	"frozen": false,
+	"frozen": 0,
 	"burned": 0,
 	"poisoned": false,
 }
@@ -50,7 +50,7 @@ func take_turn():
 			await get_tree().create_timer(0.75).timeout
 			update_status()
 	
-		if status["frozen"] == false:
+		if status["frozen"] <= 0:
 			var choose_block = Global.rng.randi_range(0, 4)
 			if choose_block != 0:
 				play_attack()
@@ -63,7 +63,7 @@ func take_turn():
 				turn_manager.turn = turn_manager.turn_type.PLAYER
 		else:
 			print("frozen! turn skipped")
-			status["frozen"] = false
+			status["frozen"] -= 1
 			turn_manager.turn = turn_manager.turn_type.PLAYER
 
 func take_burn_damage():
@@ -91,6 +91,8 @@ func take_burn_damage():
 func apply_status(type):
 	if type == "burned":
 		status[type] = 3
+	elif type == "frozen":
+		status[type] = 2
 	else:
 		status[type] = true
 	update_status()
@@ -136,7 +138,7 @@ func take_damage(incoming_damage):
 	var net_damage = incoming_damage
 	
 	if status["poisoned"] == true:
-		net_damage = ceil(net_damage * 1.5)
+		net_damage = ceil(net_damage * 2)
 		status["poisoned"] = false
 		
 	if blocking:
@@ -167,6 +169,8 @@ func take_damage(incoming_damage):
 
 func die():
 	$Animator.play('die')
+	if boss:
+		Global.player_health += 10 * Global.loop
 	Global.exit_combat()
 
 func end_combat():
