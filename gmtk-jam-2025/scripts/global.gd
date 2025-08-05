@@ -6,6 +6,7 @@ signal start_new_loop
 signal game_end
 
 var player_health := 20
+var coins := 0
 
 @onready var music = preload("res://audio/cave themeb4.ogg")
 

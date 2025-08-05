@@ -20,7 +20,8 @@ func draw_card():
 
 func _physics_process(delta):
 	$Debug.text = str(Global.deck_comp)
-	$PlayerStats.text = str("HP: ", Global.player_health)
+	$HP.text = str("HP: ", Global.player_health)
+	$Coins.text = str("Coins: ", Global.coins)
 	Global.player_health = clampi(Global.player_health, 0, 1000000)
 
 func end_combat():

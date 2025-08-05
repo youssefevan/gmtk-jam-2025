@@ -44,7 +44,6 @@ _data = {
 
 [node name="Deck" type="Node2D" groups=["Deck"]]
 script = ExtResource("1_6rnap")
-metadata/_edit_group_ = true
 
 [node name="Sprite" type="Sprite2D" parent="."]
 position = Vector2(256, 0)
@@ -57,12 +56,21 @@ offset_top = -232.0
 text = "debug"
 autowrap_mode = 2
 
-[node name="PlayerStats" type="Label" parent="."]
+[node name="HP" type="Label" parent="."]
 offset_left = -64.0
 offset_top = 72.0
 offset_right = 64.0
 offset_bottom = 104.0
 text = "HP:"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Coins" type="Label" parent="."]
+offset_left = -128.0
+offset_top = 112.0
+offset_right = 128.0
+offset_bottom = 144.0
+text = "Coins:"
 horizontal_alignment = 1
 vertical_alignment = 1
 

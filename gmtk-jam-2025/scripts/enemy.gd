@@ -12,7 +12,7 @@ class_name Enemy
 var status = {
 	"frozen": 0,
 	"burned": 0,
-	"poisoned": false,
+	"poisoned": 0,
 }
 
 var health : int
@@ -76,7 +76,10 @@ func take_burn_damage():
 	tween.tween_property($Sprite, "scale", Vector2(0.9, 0.9), 0.075)
 	await tween.finished
 	
-	health -= 1
+	if status["poisoned"] > 0:
+		health -= 2 * Global.loop * 2
+	else:
+		health -= 2 * Global.loop
 	health = clampi(health, 0, 100)
 	update_stats()
 	
@@ -93,17 +96,25 @@ func apply_status(type):
 		status[type] = 3
 	elif type == "frozen":
 		status[type] = 2
-	else:
-		status[type] = true
+	elif type == "poisoned":
+		status[type] = 2
 	update_status()
 
 func update_status():
-	$Status/Frozen.visible = status["frozen"]
-	$Status/Poisoned.visible = status["poisoned"]
 	if status["burned"] > 0:
 		$Status/Burned.visible = true
 	else:
 		$Status/Burned.visible = false
+	
+	if status["frozen"] > 0:
+		$Status/Frozen.visible = true
+	else:
+		$Status/Frozen.visible = false
+	
+	if status["poisoned"] > 0:
+		$Status/Poisoned.visible = true
+	else:
+		$Status/Poisoned.visible = false
 
 func play_attack():
 	$Hit.play()
@@ -137,16 +148,18 @@ func attack():
 func take_damage(incoming_damage):
 	var net_damage = incoming_damage
 	
-	if status["poisoned"] == true:
+	if status["poisoned"] > 0:
 		net_damage = ceil(net_damage * 2)
-		status["poisoned"] = false
+		status["poisoned"] -= 1
 		
 	if blocking:
 		net_damage = incoming_damage - floor(incoming_damage*block_strength)
-		blocking = false
-		
 		await get_tree().create_timer(0.3).timeout
+		blocking = false
 		$Blocking.visible = false
+	
+	health -= net_damage
+	health = clampi(health, 0, 100)
 	
 	var tween = get_tree().create_tween()
 	tween.set_trans(Tween.TRANS_CUBIC)
@@ -159,8 +172,6 @@ func take_damage(incoming_damage):
 	await tween2.finished
 	
 	#print(incoming_damage, " --> ", net_damage)
-	health -= net_damage
-	health = clampi(health, 0, 100)
 	
 	update_stats()
 	
@@ -170,7 +181,11 @@ func take_damage(incoming_damage):
 func die():
 	$Animator.play('die')
 	if boss:
-		Global.player_health += 10 * Global.loop
+		Global.player_health += 7 * Global.loop
+		Global.coins += 20
+	else:
+		Global.coins += Global.rng.randi_range(3, 7)
+	
 	Global.exit_combat()
 
 func end_combat():

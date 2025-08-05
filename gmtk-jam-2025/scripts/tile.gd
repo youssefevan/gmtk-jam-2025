@@ -9,6 +9,7 @@ var tiles = {
 	"enemy": 2,
 	"boss": 3,
 	"move": 4,
+	"shop": 5,
 }
 
 func _ready():

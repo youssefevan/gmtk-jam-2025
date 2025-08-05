@@ -23,7 +23,7 @@ func set_tiles():
 		if point == 0:
 			tile.type = "boss"
 		else:
-			match Global.rng.randi_range(0, 3):
+			match Global.rng.randi_range(0, 4):
 				0:
 					tile.type = "card"
 				1:
@@ -32,6 +32,8 @@ func set_tiles():
 					tile.type = "enemy"
 				3:
 					tile.type = "move"
+				4:
+					tile.type = "shop"
 		
 		$Tiles.add_child(tile)
 		tile.global_position = $Path2D.curve.get_point_position(point)
@@ -131,6 +133,25 @@ func handle_movement(roll):
 	
 	elif current_tile.type == "move":
 		move_encounter()
+	
+	elif current_tile.type == "shop":
+		shop_encounter()
+
+func shop_encounter():
+	$Number.visible = false
+	var tween3 = get_tree().create_tween()
+	tween3.set_trans(Tween.TRANS_CUBIC)
+	tween3.tween_property($Button, "modulate", Color("ffffff00"), 0.5)
+	await tween3.finished
+	
+	$Shop.visible = true
+	
+	if Global.coins < 7:
+		$Shop/Options/HP.disabled = true
+		$Shop/Options/Physical.disabled = true
+	else:
+		$Shop/Options/HP.disabled = false
+		$Shop/Options/Physical.disabled = false
 
 func move_encounter():
 	handle_movement(Global.rng.randi_range(-6, 6))
@@ -157,7 +178,7 @@ func add_card_encounter():
 	start_turn()
 
 func pick_encounter():
-	var encounter = Global.rng.randi_range(0, 2)
+	var encounter = Global.rng.randi_range(0, 3)
 	match encounter:
 		0:
 			add_card_encounter()
@@ -165,6 +186,8 @@ func pick_encounter():
 			enemy_encounter(false)
 		2:
 			move_encounter()
+		3:
+			shop_encounter()
 
 func enemy_encounter(is_boss):
 	var tween = get_tree().create_tween()
@@ -185,3 +208,40 @@ func start_combat():
 	var tween3 = get_tree().create_tween()
 	tween3.set_trans(Tween.TRANS_CUBIC)
 	tween3.tween_property($Button, "modulate", Color("ffffff00"), 0.5)
+
+
+func _on_cancel_pressed():
+	$Shop.visible = false
+	
+	$Number.visible = true
+	$Button.disabled = false
+	var tween3 = get_tree().create_tween()
+	tween3.set_trans(Tween.TRANS_CUBIC)
+	tween3.tween_property($Button, "modulate", Color.WHITE, 0.5)
+	await tween3.finished
+	
+	start_turn()
+
+
+func _on_hp_pressed():
+	$Shop.visible = false
+	Global.player_health += 5
+	Global.coins -= 7
+	$Number.visible = true
+	$Button.disabled = false
+	var tween3 = get_tree().create_tween()
+	tween3.set_trans(Tween.TRANS_CUBIC)
+	tween3.tween_property($Button, "modulate", Color.WHITE, 0.5)
+	await tween3.finished
+
+
+func _on_physical_pressed():
+	$Shop.visible = false
+	Global.deck_comp["Physical"] += 5
+	Global.coins -= 7
+	$Number.visible = true
+	$Button.disabled = false
+	var tween3 = get_tree().create_tween()
+	tween3.set_trans(Tween.TRANS_CUBIC)
+	tween3.tween_property($Button, "modulate", Color.WHITE, 0.5)
+	await tween3.finished

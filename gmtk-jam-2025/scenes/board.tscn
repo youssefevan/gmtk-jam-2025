@@ -125,4 +125,40 @@ stream = ExtResource("11_pnb36")
 [node name="Move" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("12_mvl7x")
 
+[node name="Shop" type="VBoxContainer" parent="."]
+visible = false
+offset_top = 128.0
+offset_right = 391.0
+offset_bottom = 256.0
+size_flags_horizontal = 4
+size_flags_vertical = 4
+alignment = 1
+
+[node name="Options" type="HBoxContainer" parent="Shop"]
+layout_mode = 2
+
+[node name="Cancel" type="Button" parent="Shop/Options"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Cancel"
+
+[node name="HP" type="Button" parent="Shop/Options"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "+5 HP"
+
+[node name="Physical" type="Button" parent="Shop/Options"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "+5 physical"
+
+[node name="Label" type="Label" parent="Shop"]
+layout_mode = 2
+text = "7 coins"
+horizontal_alignment = 1
+vertical_alignment = 1
+
 [connection signal="pressed" from="Button" to="." method="_on_button_pressed"]
+[connection signal="pressed" from="Shop/Options/Cancel" to="." method="_on_cancel_pressed"]
+[connection signal="pressed" from="Shop/Options/HP" to="." method="_on_hp_pressed"]
+[connection signal="pressed" from="Shop/Options/Physical" to="." method="_on_physical_pressed"]

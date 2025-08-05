@@ -100,7 +100,7 @@ func attack():
 			_:
 				target.take_damage(damage)
 	
-	turn_manager.start_enemy_turn	
+	turn_manager.start_enemy_turn
 
 func return_to_deck():
 	if states.current_state != play and states.current_state != discard:
